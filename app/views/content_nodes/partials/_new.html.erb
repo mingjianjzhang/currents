@@ -1,0 +1,104 @@
+<p><%= flash[:notice] %></p>
+<% if flash[:alert] %>
+  <% flash[:alert].each do |alert| %>
+	<p class="red-text"><%= alert %> </p>
+  <% end %>
+<% end %>
+<form action="/contents" method="post">
+	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	 <div class="row">
+		<div class="col s6">
+			<div class="input-field">
+				<select class="contentCategory" name="content_nodes[category_id]" id="categories">>
+					<option disabled selected>Choose...</option>
+					<% @categories.each do |category| %>
+						<option value="<%= category.id %>"><%= category.name %></option>
+					<% end %>
+				</select>
+				<label for="categories">Type of Content</label>
+	 		</div>
+		</div>
+		<div class="col s6">
+			<div class="linkInputs input-field" style="display:none">
+				<input type="text" name="content_nodes[link]" id="link">
+				<label for="link"></label>
+			</div>			
+		</div>
+	 </div>
+
+	 <div class="row">
+	 	<div class="col s6">
+	 		<div class="input-field">
+	  			<input type="text" name="content_nodes[title]" id="contenttitle">
+	  			<label for="contenttitle">Title</label>
+	 		</div> 
+	 	</div>
+	 	<div class="col s6">
+		 	<div class="input-field">
+				<input class="date" type="text" name="content_nodes[day]" id="description">
+			 	<label for="description">Date Published</label>
+		 	</div>
+		</div> 			
+	 </div>
+	 <div class="notBook">
+	 <div class="row">
+	 	<div class="col s6">
+			<div class="input-field">
+				<select class="contentCategory" name="content_nodes[source_id]" id="sourceS">>
+					<option disabled selected>Choose...</option>
+					<% @sources.each do |source| %>
+						<option value="<%= source.id %>"><%= source.name %></option>
+					<% end %>
+				</select>
+				<label for="sourceS">Source</label>
+				<a action="/sources" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Source</a>
+			</div>
+	 	</div>
+	 	<div class="col s6">
+		 	<div class="input-field">
+				<select name="tagsS" id="tagsS" multiple>
+					<option disabled selected>Choose...</option>
+					<% @tags.each do |tag| %>
+					<option value=<%=tag.id%>><%= tag.name %></option>
+					<% end %>
+				</select>
+				<label for="tagsS">Tags</label>
+				<a class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
+			 </div>
+		</div>
+	</div>
+	 <div class="row">
+		<div class="col s12">
+			<div class="input-field">
+				<textarea class="materialize-textarea" name="content_nodes[description]" id="description"></textarea>
+			 	<label for="description">Description</label>
+			 </div>
+		</div>
+	</div>
+	</div>
+	 <button class="btn waves-effect waves-light center-align" type="submit">Add</button>
+</form>
+
+	<div id="addModal" class="modal">
+		<div class="modal-content">
+			<div class="container">
+				<form class="addSource" action="/sources" method="post" style="display:none;">
+					 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+					<div class="input-field">
+						<input type="text" name="sources[name]" id="sourceI">
+			 			<label for="sourceI">Source</label>
+					</div>
+					<button class="btn waves-effect waves-light center-align" type="submit">Create</button>
+				</form>
+				<form class="addTag" action="/tags" method="post" style="display:none;">
+				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				 <p> List as many tags as you would like, separated by a comma and a space. 
+					<div class="input-field">
+						<input type="text" name="tags" id="tagsI">
+			 			<label for="tagsI">Tags</label>
+					</div>
+					<button class="btn waves-effect waves-light center-align" type="submit">Create</button>
+				</form>
+			</div>
+		</div>
+	</div>

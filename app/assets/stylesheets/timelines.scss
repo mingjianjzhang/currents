@@ -1,0 +1,25 @@
+// Place all the styles related to the Timelines controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.tooltip {
+
+	width: 120px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -60px;
+}
+
+#main {
+	padding-left: 300px;
+}
+
+.side-nav {
+	width: 250px;
+}

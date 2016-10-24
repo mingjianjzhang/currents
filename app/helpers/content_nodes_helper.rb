@@ -1,0 +1,2 @@
+module ContentNodesHelper
+end

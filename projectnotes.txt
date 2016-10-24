@@ -1,0 +1,222 @@
+POSSIBLE SCRIPTS
+http://www.jqueryscript.net/demo/Interactive-Accessible-jQuery-Timeline-Plugin-Timeliner/demo-future/
+
+
+
+Syria
+Syria war: Russia announces Aleppo humanitarian pause
+
+Russia has announced a "humanitarian pause" in its bombing of the Syrian city of Aleppo.
+
+
+http://www.bbc.com/news/world-middle-east-37683244
+
+I like the pushing and pulling idea...
+How would you push... that would just be adding, doing inserts.
+Pulling would ... be the same thing, just inserts. 
+
+
+Right...also the SOCIAL ACTION component ... sigh. A lot of Features
+
+
+Monthly snapshots
+Yearly 
+
+Node?
+Title:
+Link: 
+Date:
+Description: 
+Category:
+
+Aside from the daily
+
+Daily...TimeGrouped ... CategoryGrouped.
+
+Topics
+
+
+One Day - Has many nodes
+
+You also want currents... like sub-stories that you can also follow and view the timeline for. 
+
+Categories :
+
+Facts - politics, incidents, etc...
+Commentary - Opinion pieces, surveys, overviews, etc...
+The "human" side - interviews, clips with people actually there
+Art - Fiction/documentaries/films related to the event. 
+
+Should certain pieces be not-time-sensitive? I think everything outside of facts... maybe make that an option? If it's time-sensitive it will be put on the timeline, but if it's not time-sensitive ... where would it go? I guess it could still be attached to that day. But what if someone finds ... and it would be cool if, from the art page, you could also link on links to events that it actually references. Well I guess you want that for every page. 
+
+Also, premade "Courses" for subtopics. 
+
+
+One snapshot - has many nodes
+
+
+Admin Side as well
+Every Day you will create a new node... or make that optional?
+Dashboard should see all push requests.
+Snapshot ... last week, voting opens, you can only vote for options on the "OFFICIAL" timeline. 
+
+
+
+You also want a nice timeline display.
+File Upload.
+
+TO READ:
+https://www.amazon.com/Woman-Crossfire-Diaries-Syrian-Revolution/dp/1908323124
+https://www.amazon.com/Being-Arab-Samir-Kassir/dp/1844672808
+https://www.amazon.com/Understanding-ISIS-New-Global-Terror/dp/1566560942
+https://www.amazon.com/gp/product/1627793445/ref=pd_sim_14_6?ie=UTF8&psc=1&refRID=9HG45A4BTWCJV8RJ615M
+https://www.amazon.com/Dispatches-Arab-Spring-Understanding-Middle/dp/081669012X
+
+
+
+PE
+****** STEPS *******
+1. Basic Model --CHECK
+2. Creation
+	loginreg: --CHECK
+	timeline: --CHECK
+	snapshot: --CHECK
+	content: --CHECK
+3. DATA
+
+http://www.cnn.com/2016/10/20/middleeast/mosul-iraq-syria-yazidi/
+
+<iframe src="https://www.npr.org/player/embed/496984850/496984851" width="100%" height="290" frameborder="0" scrolling="no" title="NPR embedded audio player"></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OVT3ysM-5iM" frameborder="0" allowfullscreen></iframe>
+
+The key is where does the relation come in, right? Because arab spring preceded syria, that's where the connection would come in, you couldn't say that it "spawned" that crisis, but there would have to be a tie. The tie would be... like a many-to-many table? 
+ARAB SPRING -- RELATED TO --- .. ISIS --- RELATED TO --- Crisis in Syria --RELATED TO -- refugee crisis in Europe
+Sub Current - Persecution of Yazidis.
+But then... you could also elevate the Yazidis to their own current, it just depends on interest I guess.
+PERSONAGES
+Abu Bakr al-Baghdadi
+
+    SYRIA:
+    	Bashar Al-Assad: president
+    	March 2011: Pro-Democracy Protests in Deraa.
+    	Hezbollah
+    ISLAMIC STATE:
+       Intersecting currents
+    ARAB SPRING... would be the spawn, right? Cornerstone, but of course you can trace the current even further back. Maybe for this project we stop there.
+
+    NEED TO PICK A BETTER FONT
+    Begin with refugee crisis in europe -- syria is not the only place, but makes up a large percentage of it.
+    Lead up to syria
+
+    	A MAP API would be nice as well, showing where things happened and when. 
+
+    file:///Users/mingjianzhang/Downloads/Excerpt-Samar%20Yazbek-A%20Woman%20in%20the%20Crossfire%20-English.pdf
+
+
+10-20
+
+Goals::
+
+Populate 5 nodes with content, just factual, in Syria. OKAY!!!
+Get the links to display correctly
+
+10-21
+Goals::
+THINGS TO TACKLE TODAY:
+   Ajax Updates... Let's make the Scope Searches work.
+   Tagging Content
+   Alternate Views, apart from timeline
+   Temporary snapshots... i don't think you even need the snapshots, they are just basically query containers... except for the dates, right, they just make it easier.
+
+   Because you would have to save it in the many_to_many table... could you have a temporary table? not a problem to create the actual snapshots, right? create a temporary snapshot, no the snapshot can't be temporary either because it has to have an id.
+
+i think it's okay... so for example, all western media.
+1. find all content with that tag.
+2. you still have to group by date at this point. Could do with a while loop, store it in a hash. the data-date would just be the key, okay i think that works.
+3. [{ "date" => [content]}, { "date" => [content]}, { "date" => [content]},
+data-date = "snapshot.key" 
+
+SNAPSHOTS are for user-curated views, for example, key events in the history of the syrian civil war. So there should be a separate snapshot creation view, with query access to all content_nodes, upon which they can pick and choose, maybe drag and drop to create the right views.
+
+Otherwise.... yeah. it's like an online library. 
+Sea
+
+FEATURES:
+   Tagging content -- NICEEE
+    - Western Media
+    - Russian Media
+    - Syrian - 
+    - Other - 
+   Search by "current"
+   Search by date
+   Search by event
+
+   Admin button-menu
+   Different views:
+      Commentary
+      Arts/Culture 
+   Resources 
+   Interface for creating your own snapshots.
+
+http://www.bbc.com/news/world-18973719
+Aleppo bombed by fighter planes
+Fighter jets have bombed eastern areas of Syria's second city Aleppo
+2012-07-24
+
+NEXT STEPS:::
+Rewriting queries to not be dependent on snapshots, on content nodes only... shouldn't be TOOOOO Badd..d.???
+
+10/23/16
+
+Implement Searching By Keywords ... check.
+Google Books Api is the best... 
+Also with information local library availability --- need to learn how to access this stupid API...
+
+Compiling Snapshots, customized timeline views
+Cross-Timelines...
+
+
+Content:
+.endOfContent {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.title {
+    margin: 70px 0 20px;
+}
+
+BOLD LOOK
+Titles cannot be link, 
+You need to have sourcing there as well
+
+Line-spacing
+Make title clearer
+Change fonts for title and content
+Icon for every item
+Pull the picture from the site, ask for pictures for them to choose from after they post a link
+
+HOME PAGE: 
+search over the graph
+Node view...graph charts jumping around - that's the main navigation
+
+RIGHT-SIDE: 
+search
+graph view
+
+TUTORIAL VIEW
+
+
+For adding content:
+do a crawl of page, put in suggested data
+
+
+
+
+
+
+
+
+	

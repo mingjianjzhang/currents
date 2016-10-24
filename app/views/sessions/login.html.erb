@@ -1,0 +1,63 @@
+<div class='container'>
+	<div class="row">
+		<div class="col s6">
+			<h5> Register </h5>
+<% if flash[:errors] %>
+<% flash[:errors].each do |error| %>
+			<p class="red-text"><%= error %></p>
+<% end %>
+<% end %>
+			<form action="/users" method="post">
+				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<div class="input-field">
+					<input type="text" name="user[first_name]" id="first_name">
+					<label for="first_name">First Name</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="user[last_name]" id="last_name">
+					<label for="last_name">Last Name</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="user[username]" id="username">
+					<label for="username">Username</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="user[email]" id="email">
+					<label for="email">Email</label>
+				</div>
+				
+				<div class="input-field">
+					<input type="text" name="user[password]" id="password">
+					<label for="password">Password</label>
+				</div>
+
+				<div class="input-field">
+					<input type="text" name="user[password_confirmation]" id="cpassword">
+					<label for="cpassword">Password Confirmation</label>
+				</div>
+				<button class="btn waves-effect waves-light center-align" type="submit">Register</button>
+			</form>
+		</div>
+		<div class="col s6">
+			<h5> Login </h5>
+			<p class="red-text"><%= flash[:bad_password] %></p>
+			<p class="red-text"><%= flash[:no_user] %></p>
+			<form action="/login" method="post">
+				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<div class="input-field">
+					<input type="text" name="email" id="email">
+					<label for="email">Email</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="password" id="password">
+					<label for="password">Password</label>
+				</div>
+				<button class="btn waves-effect waves-light center-align" type="submit">Log In</button>
+			</form>
+
+
+
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,60 @@
+<%= javascript_include_tag 'main' %>
+<section class="cd-horizontal-timeline loaded">
+	<div class="timeline">
+		<div class="events-wrapper">
+			<div class="events">
+				<ol>
+
+<% @snapshots.each do |snapshot| %>
+					<li>
+						<a href="#0" class="<%= 'selected' if snapshot == @snapshots.first %>" data-date="<%= snapshot[:snapshot][:day].strftime('%d/%m/%Y') %>"><%= snapshot[:snapshot][:day].strftime('%b %d')%></a>
+					</li>
+<% end %>
+				</ol>
+
+				<span class="filling-line" aria-hidden="true"></span>
+			</div> <!-- .events -->
+		</div> <!-- .events-wrapper -->
+			
+		<ul class="cd-timeline-navigation">
+			<li><a href="#0" class="prev inactive">Prev</a></li>
+			<li><a href="#0" class="next">Next</a></li>
+		</ul> <!-- .cd-timeline-navigation -->
+	</div> <!-- .timeline -->
+
+	<div class="events-content">
+		<ol>
+
+<% @snapshots.each do |snapshot| %>
+
+			<li class="<%= 'selected' if snapshot == @snapshots.first %>" data-date="<%= snapshot[:snapshot][:day].strftime('%d/%m/%Y') %>">
+				<h4 title="aloha"><%= snapshot[:snapshot][:day].strftime('%B %d, %Y')%></h4>
+
+				<% snapshot[:content].each do |content| %>
+				<% if content[:category_id] == 1 %>
+				<h5><a href="<%= content[:link] %>" target="_blank"><%= content.title %></a></h5>
+				<% elsif content[:category_id] == 2 %>
+				<h5><%= content.title %></h5>
+				<div id="embed<%= content.id %>">
+				</div>
+				<%= raw content.link %>
+
+				<% end %>
+				<p><%= content.description %></p>
+				<p> Source: <%= content.source %></p>
+				<p> Tags: 
+				<% for i in 0...content.tags.length %>
+					<a href=""><%= content.tags[i] %></a>
+					<% if i != content.tags.length - 1 %>
+					, 
+					<% end %>
+				<% end %>
+				</p>
+				<% end %>
+
+			</li>
+<% end %>
+			
+		</ol>
+	</div> <!-- .events-content -->
+</section>

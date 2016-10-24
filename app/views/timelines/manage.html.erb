@@ -1,0 +1,10 @@
+<%= render 'shared/header' %>
+<div class='container'>
+	<div class="row">
+		<% @timelines.each do |timeline| %>
+		<div class="col s6">
+			<h5><%= timeline.title %></h5>
+		</div>
+		<% end %>
+	</div>
+</div>

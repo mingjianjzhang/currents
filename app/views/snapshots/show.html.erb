@@ -1,0 +1,22 @@
+<%= render 'shared/header' %>
+<div class="container">
+	<h5><%= @snapshot.title %> - <%= @snapshot.day %></h5>
+	<div class="container">
+		<% @content.each do |content| %>
+		<a href="<%= content.link %>" target="_blank"><%= content.title %></a>
+			<div class="container">
+				<p><%= content.description %></p>
+			</div>
+		<% end %>
+	</div> 
+<% if flash[:alert] %>
+  <% flash[:alert].each do |alert| %>
+	<p class="red-text"><%= alert %> </p>
+  <% end %>
+<% end %>
+<p class="green-text"><%= flash[:notice] %></p>  
+
+	<%= render partial: 'content_nodes/partials/new', locals: { snapshot_id: @snapshot.id, categories: @categories } %>
+
+</div>
+
