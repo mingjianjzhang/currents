@@ -18,6 +18,24 @@
 <% end %>
 <% end %>
 
-
+<div class="container">
+<p class="green-text"><%= flash[:notice] %></p>
+<% if flash[:alert] %>
+  <% flash[:alert].each do |alert| %>
+<p class="red-text"><%= alert %></p>
+  <% end %>
+<% end %>
+<div id="timelineCreation">
+<h5> Make a new timeline </h5>
+<form action="/timelines" method="post">
+	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<div class="input-field">
+		<input type="text" name="timeline[title]" id="name">
+		<label for="name">Name</label>
+	</div>
+	<button class="btn waves-effect waves-light center-align" type="submit">Create</button>
+</form>
+</div>
+</div>
 
 </div>

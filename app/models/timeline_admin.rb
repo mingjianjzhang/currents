@@ -11,7 +11,9 @@ class TimelineAdmin < ActiveRecord::Base
       admin = Admin.create(user_id: user_id)
       self.create(admin_id: admin.id, timeline_id: timeline_id, status: status)
     end
-    TimelineUser.where(user_id: user_id, timeline_id: timeline_id).first.destroy
+    if TimelineUser.where(timeline_id: timeline_id).first 
+      TimelineUser.where(user_id: user_id, timeline_id: timeline_id).first.destroy
+    end
   end
 end
  

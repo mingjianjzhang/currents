@@ -316,6 +316,7 @@ $(document).ready(function(){
 		$(this).slideUp();
 
 	})
+ 
 	// $('#resultsIndex').mouseout(function(){
 		// if ($(this).css("display") == "block") {
 			// e.stopPropagation();

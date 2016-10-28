@@ -30,7 +30,6 @@ class ContentNodesController < ApplicationController
     @keywords = Tag.where(timeline_id: @timeline.id)
     @categories = Category.all
     @sources = Source.all
-    
     render partial: "content_nodes/partials/new"
   end
   

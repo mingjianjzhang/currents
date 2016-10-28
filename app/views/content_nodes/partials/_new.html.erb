@@ -57,7 +57,7 @@
 				<input class="inputText" name="image_source" id="image_source" type="text">
 				
 			</div>
-				<a action="image" class="addMod btn waves-effect waves-light center-align">Upload Image</a>
+				<a id="uploadPreview" action="image" class="addMod btn waves-effect waves-light center-align">Upload Image</a>
 		</div>
 	</div>
 	 <div class="row">
@@ -73,8 +73,8 @@
 
 				<a action="source" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Source</a>
 			</div>
-			<div id="tagList" class="input-field">
 		 		<p class="inputLabel"> Tags </p>
+			<div id="tagList" class="input-field">
 				<select id = "tagSelect" name="tags[]" multiple>
 					<option disabled selected>Choose...</option>
 					<% if @keywords %>
@@ -83,9 +83,9 @@
 					<% end %>
 					<% end %>
 				</select>
-				
-				<a action="tag" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
+			
 			 </div>
+			 <a action="tag" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
 	 	</div>
 	 	<div id="imagePreview" class="notBook col s6">
 		 	<h5>Image Preview</h5>
@@ -117,6 +117,7 @@
 <form class="addTag" action="/tags" style="display:none;">
 	<p id="tagMsg" class="green-text"></p>
  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+ <input type="hidden" name="timeline_id" value=<%= @timeline.id %>>
  <p> List as many tags as you would like, separated by a comma and a space. </p>
 	<div class="input-field">
 		<input type="text" name="tags" id="tagsI">
