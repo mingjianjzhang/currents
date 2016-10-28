@@ -2,11 +2,11 @@
 <div id="graphTest">
 
 </div>
-<div id="mainContainer" class="green">
+<div id="mainContainer">
 
 <div id="homeSearch" class="center-align">
-<h5> I want to learn more about ...</h5>
-<div class="center-align" style="width: 40%; display: inline-block">
+<h3> I want to learn more about ...</h3>
+<div class="center-align" style="width: 60%; display: inline-block">
 <select id="searchSelect" style="width: 18rem">
 	<%= @timelines.each do |timeline| %>
 	<option value="<%= timeline.id %>"><%= timeline.title %></option>

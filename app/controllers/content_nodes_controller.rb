@@ -13,8 +13,8 @@ class ContentNodesController < ApplicationController
     @keywords = Tag.all
   	content = ContentNode.new(content_nodes_params)
   	if content.save
-      ContentTag.add_tags content.id, params[:tags]
       TimelineContent.create(content_node_id: content.id, timeline_id: params[:timeline_id])
+      ContentTag.add_tags content.id, params[:tags]
   	  render partial: "content_nodes/partials/new", locals: { notice: "You have successfully added a piece of content" }
   	else
       render partial: "content_nodes/partials/new", locals: { alert: content.errors.full_messages }

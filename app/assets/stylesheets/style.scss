@@ -6,6 +6,11 @@
 
 @import 'partials/layout'; // responsive grid and media queries
 
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Ovo');
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
+
 /* -------------------------------- 
 
 Primary style
@@ -21,6 +26,7 @@ html {
 }
 
 body {
+	font-family: "Open Sans", sans-serif !important;
 	color: $color-1;
 	background-color: $color-4;
 }
@@ -36,6 +42,87 @@ Personal CSS
 
 -------------------------------- */
 
+/*       Variables           */
+$navy-blue: #18121E;
+$gun-metal: #233237;
+$rusty-red: #984B43;
+$warm-yellow: #EAC67A;
+
+svg {
+	background-color: $gun-metal !important;
+}
+nav {
+	background-color: $warm-yellow !important;
+	color: !important;
+	a {
+		color: $navy-blue !important;
+	}
+}
+
+.node circle {
+  cursor: pointer;
+  stroke: #18121E;
+  stroke-width: 3px;
+}
+
+.ovo {
+	font-family: "Ovo", sans-serif;
+	font-size: 2.5rem;
+}
+
+.node text {
+  font-family: 'Playfair Display', sans-serif;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+line.link {
+  fill: none;
+  stroke: #cfd8dc;
+  stroke-width: 2px;
+}
+
+.circle {
+  r: 100;
+}
+#mainContainer {
+	background-color: $rusty-red !important;
+	color: lighten(#c8cbc1, 10%) !important;
+	.select2-container--default .select2-selection--single .select2-selection__rendered {
+		color: lighten($warm-yellow, 10%) !important ;
+		font-size: 3rem;
+		line-height: 4rem;
+		font-family: "Oswald", sans-serif !important;
+		letter-spacing: 0.8px;
+	}
+	.select2-container--default .select2-selection--single {
+	border-radius: 0 !important;
+	background-color: transparent !important;
+	border: 0 !important;
+	border-bottom: 0px!important;
+	margin-bottom: 20px !important;
+	padding-bottom: 35px !important;
+	margin-top: 10px;
+	}
+
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+	display: none;
+	}
+	.select2-dropdown {
+		background-color: $navy-blue;
+		color: white;
+	}
+	h3 {
+
+	}
+}
+#graphTest {
+	height: 500px;
+}
+
+#homeSearch {
+
+}
 #main {
 	padding-left: 200px;
 	padding-right: 20px;
@@ -79,15 +166,7 @@ select.ui-datepicker-month, select.ui-datepicker-year {
 	margin-bottom: 0;
 }
 
-.select2-container--default .select2-selection--single {
-	border-radius: 0 !important;
-	background-color: transparent !important;
-	border: 0 !important;
-	border-bottom: 1px solid gray !important;
-	margin-bottom: 20px !important;
-	padding-bottom: 35px !important;
-	margin-top: 10px;
-}
+
 
 .select2-container {
 	width: 100% !important;
@@ -228,10 +307,11 @@ select.ui-datepicker-month, select.ui-datepicker-year {
 
 }
 #timelineNav {
-		float: right;
+	    
 		display: none;
 
 }
+#timelineDashboardHeader
 
 #timelineCreation {
 	margin-top: 40px;

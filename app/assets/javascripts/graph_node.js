@@ -5,7 +5,7 @@ var graph =
 {
  "name": "Syria",
  "children": [
-  {"name": "Migrant Crisis"},
+  {"name": "Migrant Crisis", "size": 55},
   {
    "name": "Arab Spring",
    "children": [
@@ -13,7 +13,7 @@ var graph =
      "name": "Middle East",
      "children": [
       {"name": "Iran", "size": 40},
-      {"name": "Saudi Arabia", "size": 38},
+      {"name": "Saudi Arabia", "size": 60},
       {"name": "Palestine", "size": 40},
       {"name": "Iraq", "size": 30},
       {"name": "Yemen", "size": 35}
