@@ -168,10 +168,11 @@ $(document).ready(function(){
 	$('.previewTimeline').click(function(){
 		timelineID = $(this).attr('timeline');
 		timelineTitle = $(this).text();
-		$.post("/display_timeline/"+timelineID, { "scope": "2" }, function(res){
+		$.post("/display_timeline/"+timelineID, { "scope": "5" }, function(res){
 			$('#timelinePreview').html(res)
 			$('#timelineNav').attr("href", "/timeline/"+timelineID);
 			$('#timelineNav').show();
+			$('#timelineNav').css('display', 'inline-block');
 			$('#timelineLabel').text(timelineTitle);
 
 		})

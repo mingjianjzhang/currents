@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
   end
   def library_info
     crawler = Crawler.new
-    @libraries = crawler.world_cat("http://www.worldcat.org/webservices/catalog/content/libraries/isbn/#{params[:isbn]}?location=#{params[:zip]}&wskey=PUNxEzPzoYIVx8v7kvO08ZMDqE9mx7nF6lvQaJ4nZ2aASXHjkUm0Ls1cjC993ND0DPUnhTnpL79f5V4t")
+    @libraries = crawler.world_cat("http://www.worldcat.org/webservices/catalog/content/libraries/isbn/#{params[:isbn]}?location=#{params[:zip]}&wskey=8LK4MBpA9XHh4I7TMO51wGnP0Tt9uf1mLxJqtBYrlgckMPda0kZctcYpTtsSMHqkdN7gTlTL7u6lFrVs")
     render partial: "shared/libraries"
   end
 

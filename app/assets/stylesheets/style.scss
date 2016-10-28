@@ -10,7 +10,9 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Ovo');
 @import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-@import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative:900');
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
+@import url('https://fonts.googleapis.com/css?family=Goudy+Bookletter+1911');
+
 /* -------------------------------- 
 
 Primary style
@@ -26,13 +28,12 @@ html {
 }
 
 body {
-	font-family: "Open Sans", sans-serif !important;
+	font-family: "Open Sans", sans-serif; 
 	color: $color-1;
 	background-color: $color-4;
 }
 
 a {
-	color: $color-2;
 	text-decoration: none;
 }
 
@@ -48,14 +49,66 @@ $gun-metal: #233237;
 $rusty-red: #984B43;
 $warm-yellow: #EAC67A;
 
-svg {
+
+#newFormLoading {
+	position: fixed;
+	top: 200px;
+	left: 400px;
+	background-color: rgba(0,0,0,0.1);
+
+}
+.headingIndex {
+	padding: 10px 20px;
+	margin-bottom: 10px;
+	background-color: $navy-blue;
+}
+.warm-yellow-text {
+	color: darken($warm-yellow, 20%) !important;
+}
+.gun-metal {
+	background-color: $gun-metal !important;
+}
+.gun-metal-text {
+	color: $gun-metal;
+}
+.warm-yellow {
+	background-color: $warm-yellow!important;
+	color: $navy-blue;
+}
+.rusty-red {
+	background-color: $rusty-red !important;
+	color: white;
+}
+.diff-text {
+	font-family: "Ovo", sans-serif;
+}
+.goudy {
+	font-family: "Goudy Bookletter 1911", sans-serif !important;
+}
+.indexTimelineDisplay {
+	padding-bottom: 20px;
+	border-bottom: 4px solid $rusty-red;
+	h5, a {
+		display: inline-block;
+	}
+	a.previewButton {
+		float: right;
+	}
+	
+}svg {
 	background-color: $gun-metal !important;
 }
 nav {
-	background-color: $warm-yellow !important;
-	color: !important;
+	background-color: $navy-blue !important;
+	color: white !important;
 	a {
-		color: $navy-blue !important;
+		color: white !important;
+		
+		
+	}
+	ul a {
+		font-size: 1.2rem !important;
+		font-family: "Goudy Bookletter 1911", sans-serif !important;
 	}
 }
 
@@ -65,8 +118,38 @@ nav {
   stroke-width: 3px;
 }
 
+.buttton {
+	background-color: lighten($gun-metal, 20%) !important ;
+}
+.nestForm {
+	padding: 20px;
+	border: 1px solid $rusty-red;
+	border-radius: 5px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.articleLink {
+	color: black;
+	transition: all 1s ease-out;
+	a {
+		color: black;
+	   :hover {
+		color: $gun-metal;
+	   }
+	}
+	h5 {
+		font-family: "Oswald", sans-serif !important;
+		font-size: 2.5rem;
+	}
+}
+.articleLink:hover {
+	background-color: lighten($warm-yellow, 20%);
+	
+}
+
 .ovo {
-	font-family: "Cinzel Decorative", sans-serif;
+	font-family: "Special Elite", sans-serif;
 	font-size: 2.5rem;
 }
 
@@ -113,7 +196,7 @@ line.link {
 		color: white;
 	}
 	h3 {
-
+		font-family: "Goudy Bookletter 1911", sans-serif !important;
 	}
 }
 #graphTest {
@@ -129,9 +212,12 @@ line.link {
 }
 
 .side-nav {
+	width: 280px;
+}
+
+.side-nav.fixed {
 	padding-top: 64px;
-	width: 250px;
-	background: transparent;
+	
 }
 
 .searchDate {
@@ -292,12 +378,13 @@ select.ui-datepicker-month, select.ui-datepicker-year {
 	width: 25%;
 
 	li {
-		padding: 10px;
 		:hover {
-			background-color: blue;
+			background-color: $gun-metal;
+			color: white;
 		}
 		a {
 			display:block;
+			padding: 15px 5px;
 			color: black;
 		}
 	}
@@ -307,11 +394,14 @@ select.ui-datepicker-month, select.ui-datepicker-year {
 
 }
 #timelineNav {
-	    
+	    float: right;
+	    margin-top: 1rem;
 		display: none;
 
 }
-#timelineDashboardHeader
+.timelineDashboardHeader > * {
+	display: inline-block;
+}
 
 #timelineCreation {
 	margin-top: 40px;
@@ -573,8 +663,7 @@ Main Components
 	}
 
 	p {
-		font-size: 1.4rem;
-		color: shade($color-4, 40%);
+
 	}
 
 	em {

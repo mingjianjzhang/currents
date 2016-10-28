@@ -25,7 +25,6 @@ var graph =
       {"name": "Egypt", "size": 35},
       {"name": "Algeria", "size": 57},
       {"name": "Morocco", "size": 70},
-      {"name": "Algeria", "size": 54},
       {"name": "Tunisia", "size": 34}
      ]
     }

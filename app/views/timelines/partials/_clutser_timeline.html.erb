@@ -1,5 +1,33 @@
 <%= javascript_include_tag 'main' %>
+<% if @contents == [] %>
+<h5> No Results Found </h5>
+<section class="cd-horizontal-timeline loaded">
+	<div class="timeline">
+		<div class="events-wrapper">
+			<div class="events">
+				<ol>
+					<li><a href="#0" data-date="16/01/2014" class="selected">Try another search</a></li>
+				</ol>
+				<span class="filling-line" aria-hidden="true"></span>
+			</div> <!-- .events -->
+		</div> <!-- .events-wrapper -->
+			
+		<ul class="cd-timeline-navigation">
+			<li><a href="#0" class="prev inactive">Prev</a></li>
+			<li><a href="#0" class="next">Next</a></li>
+		</ul> <!-- .cd-timeline-navigation -->
+	</div> <!-- .timeline -->
 
+	<div class="events-content">
+		<ol>
+			<li class="selected" data-date="16/01/2014">
+			</li>
+
+	
+		</ol>
+	</div> <!-- .events-content -->
+</section>
+<% else %>
 <section class="cd-horizontal-timeline loaded">
 	<div class="timeline">
 		<div class="events-wrapper">
@@ -23,8 +51,9 @@
 		</ul> <!-- .cd-timeline-navigation -->
 	</div> <!-- .timeline -->
 	<div class="indexEvents">
-  <a class='showIndex' href='#'>Search Index</a>
-  <ul class="orange accent-1" id='resultsIndex'>
+
+  <a class="showIndex btn waves-effect waves-light center-align warm-yellow">Content List</a>
+  <ul class="rusty-red" id='resultsIndex'>
  <% @contents.each do |cluster| %>
 	<% cluster[:contents].each do |content| %>
 	<li>
@@ -33,7 +62,7 @@
 	<% end %>
 <% end %>
   </ul>
-	</div>
+	</div> 
 	<div class="events-content">
 		<ol>
 
@@ -41,7 +70,7 @@
 
 			<li class="<%= 'selected' if cluster == @contents.first %>" data-date="<%= cluster[:date].strftime('%d/%m/%Y') %>">
 			<div class="row">
-				<h4><%= cluster[:date].strftime('%B %d, %Y')%></h4>
+			<h4 class="gun-metal-text goudy"><%= cluster[:date].strftime('%B %d, %Y')%></h4>
 			</div>
 				<% cluster[:contents].each do |content| %>
 				<% if content.category_id == 4 %>
@@ -67,7 +96,7 @@
 					<div class="col s3">
 						<div class="input-field">
 							<input type="text" name="zipSearch" id="zipSearch<%= content.id %>" placeholder="Zip Code">
-							<label for="zipSearch">Search Libraries Near You</label>
+							<label class="active" for="zipSearch">Search Libraries Near You</label>
 						</div>
 						<script>
 						$('#zipSearch<%= content.id %>').change(function(){ 
@@ -124,10 +153,12 @@
 					<div class="col s4">
 						<img class="responsive-img" src="<%= content.image.img_source %>">
 					</div>
-					<div class="col s8">
-						<h5><a href="<%= content.link %>" target="_blank"><%= content.title %></a></h5>
+					<div class="articleLink col s8">
+						<a href="<%= content.link %>" target="_blank">
+						<h5><%= content.title %></h5>
 						<p><%= content.source.name %></p>
 						<p><%= content.description %></p>
+						</a>
 						<p class="endOfContent"> Tags: 
 							<% for i in 0...content.tags.length %>
 								<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
@@ -148,3 +179,4 @@
 	</div> <!-- .events-content -->
 
 </section>
+<% end %>

@@ -27,7 +27,7 @@
 					 	<input type="hidden" name="scope" value="3">
 					</form> 
                 <li>
-                	<a id="fromBeginningA">From the Beginning</a>
+                	<a id="fromBeginningA">From the Start</a>
                 	<form action="/display_timeline/<%= @timeline.id %>" id="fromBeginning">
 						<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 					 	<input type="hidden" name="scope" value="4">
@@ -137,8 +137,10 @@
 </div>
 
 <div id="main">
+<div class="fixed">
 <h3> <%= @timeline.title %> </h3>
 <p id="queryParameters">From the Beginning</p>
+</div>
 <!-- Where the partial is rendered -->
 	<div id="timelineDisplay">
 

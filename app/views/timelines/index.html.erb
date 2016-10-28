@@ -1,14 +1,132 @@
 <%= render partial: "shared/real_header" %>
 <div class="container">
-<h4 id="timelineLabel"></h5><a href="" id="timelineNav" class="btn waves-effect waves-light center-align" type="submit">Go to Timeline</a>
+<div class='timelineDashboardHeader'>
+<h4 id="timelineLabel"></h5><a href="" id="timelineNav" class="btn waves-effect waves-light center-align">Go to Timeline</a>
+</h4>
 <div id="timelinePreview">
 </div>
- 
+
 <ul id="allTimelines">
+
+<% @all_timelines.each do |timeline| %>
+<li class="indexTimelineDisplay">
+<div class ="headingIndex">
+	<h5 class="ovo warm-yellow-text"><%= timeline[:timeline].title %></h5>
+		<a href="/timeline/<%= timeline[:timeline].id %>" class="previewButton btn waves-effect waves-light center-align gun-metal">Go To Timeline</a>
+</div>
+		<% if timeline[:content].category_id == 4 %>
+			<div class="row">
+				<script>
+					$.get("https://www.googleapis.com/books/v1/volumes?q=isbn:<%= timeline[:content].link %>", function(res){
+						$('#book<%= timeline[:content].id %>').html(
+						"<div class='row'>" + 
+						"<div class='col s3'>" + 
+						"<h4><img src='" + res.items[0].volumeInfo.imageLinks.thumbnail + "'>" +
+ 						"</h4></div>" +
+						"<div class='col s9'>" +
+						"<h4><a href='" +  res.items[0].accessInfo.webReaderLink + "' target='_blank'>" + res.items[0].volumeInfo.title + "</a></h4>" +
+						"<h5> By " + res.items[0].volumeInfo.authors[0] + "</h5>" +
+						"<p class='limitText'>" + res.items[0].volumeInfo.description + "</p>" +
+						"</div>" +
+						"</div>"
+						);
+					})
+				</script>
+				<div id="book<%= timeline[:content].id %>"></div>
+				<div class="row">
+					<div class="col s3">
+						<div class="input-field">
+							<input type="text" name="zipSearch" id="zipSearch<%= timeline[:content].id %>" placeholder="Zip Code">
+							<label class="active" for="zipSearch">Search Libraries Near You</label>
+						</div>
+						<script>
+						$('#zipSearch<%= timeline[:content].id %>').change(function(){ 
+							$.post("/library_info", { "isbn" : <%= timeline[:content].link %> , "zip" : $(this).val() }, function(res) {
+								$('#library<%= timeline[:content].id %>').html(res)
+							})
+						})
+						</script>
+						<div id="library<%= timeline[:content].id %>">
+							
+						</div>
+					</div>
+					<div class="col s9">
+				<!-- TAGS -->
+				<p class="endOfContent"> Tags: 
+				<% for i in 0...timeline[:content].tags.length %>
+					<a><%= timeline[:content].tags[i].name %></a>
+					<% if i != timeline[:content].tags.length - 1 %>
+					, 
+					<% end %>
+				<% end %>
+				</p>
+				</div>
+				</div>
+				</div>
+				<!-- END TAGS -->
+				<% elsif timeline[:content].category_id == 2 %>
+				<div class="row">
+					<div class="col s4">
+						<div id="embed<%= timeline[:content].id %>" class="video-container">
+							<%= raw timeline[:content].link %>
+						</div>
+					</div>
+					<div class="col s8">
+						<h5><%= timeline[:content].title %></h5>
+						<p><%= timeline[:content].source.name %></p>
+						<p><%= timeline[:content].description %></p>
+ 
+				<!-- TAGS -->
+
+						<p class="endOfContent"> Tags: 
+						<% for i in 0...timeline[:content].tags.length %>
+							<a><%= timeline[:content].tags[i].name %></a>
+							<% if i != timeline[:content].tags.length - 1 %>
+							, 
+							<% end %>
+						<% end %>
+						</p>
+					</div>
+				</div>
+				<!-- END TAGS -->
+				<% elsif timeline[:content].category_id == 1 %>
+				<div class="row">
+					<div class="col s4">
+						<img class="responsive-img" src="<%= timeline[:content].image.img_source %>">
+					</div>
+					<div class="articleLink col s8">
+						<a href="<%= timeline[:content].link %>" target="_blank">
+						<h5><%= timeline[:content].title %></h5>
+						<p><%= timeline[:content].source.name %></p>
+						<p><%= timeline[:content].description %></p>
+						</a>
+						<p class="endOfContent"> Tags: 
+							<% for i in 0...timeline[:content].tags.length %>
+								<a><%= timeline[:content].tags[i].name %></a>
+								<% if i != timeline[:content].tags.length - 1 %>
+								, 
+								<% end %>
+							<% end %>
+						</p>
+					</div>
+				</div>
+				<% end %>
+
+</li>
+<% end %>
 <% @timelines.each do |timeline| %>
 <li>
-	<a class="previewTimeline btn waves-effect waves-light center-align" timeline="<%= timeline.id %>"><%= timeline.title %></a>
+
+ 
 </li>
 <% end %>
 </ul>
 </div>
+	<div id="loginRegModal" class="modal">
+		<div class="modal-content">
+ 			<div class="container">
+ 			</div>
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>

@@ -20,7 +20,7 @@ class ContentNodesController < ApplicationController
       render partial: "content_nodes/partials/new", locals: { alert: content.errors.full_messages }
     end
   end 
-
+ 
   def get_title
     crawler = Crawler.new
     render json: crawler.obtain(params[:url])

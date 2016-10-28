@@ -3,6 +3,14 @@ class TimelinesController < ApplicationController
   before_action :require_correct_user, only: [:dashboard]
   def index
     @timelines = Timeline.limit(5)
+    contents = []
+    @timelines.each do |timeline|
+      item = {};
+      item[:timeline] = timeline
+      item[:content] = ContentNode.most_recent(timeline.id)
+      contents << item
+    end
+    @all_timelines = contents
   end
   def home 
     @timelines = Timeline.all
@@ -58,6 +66,8 @@ class TimelinesController < ApplicationController
     	@contents = ContentNode.last_two_years(params[:id])
     elsif params[:scope] == "4"
     	@contents = ContentNode.everything(params[:id])
+    elsif params[:scope] == "5"
+      @contents = ContentNode.last_five(params[:id])
     elsif params[:scope].length > 2
       @contents = ContentNode.by_keyword(params[:id], params[:scope])
     end 

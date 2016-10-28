@@ -16,6 +16,13 @@ class ContentNode < ActiveRecord::Base
   # keys = Timeline.find(timeline_id).content_nodes.select("distinct day").order("day")
   	self.new_package content
   end
+  def self.last_five timeline_id
+    content = self.all_info(timeline_id).reverse.first(5).reverse
+    self.new_package content
+  end
+  def self.most_recent timeline_id
+    content = self.all_info(timeline_id).last
+  end
   def self.this_month timeline_id
   	content = self.all_info timeline_id, "extract(month from day) = #{Time.now.month} AND extract(year from day) = #{Time.now.year}"
   	self.new_package content

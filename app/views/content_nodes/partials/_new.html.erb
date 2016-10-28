@@ -1,4 +1,17 @@
 <div id="contentCreationForm">
+<div class="container" id="newFormLoading">
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+ </div>
 <p><%= notice %></p>
 <% if alert %>
   <% alert.each do |alert| %>
@@ -37,8 +50,8 @@
 	 	</div>
 	 	<div class="col s6">
 		 	<div class="input-field">
-				<input class="date inputText" class="date" type="text" name="content_nodes[day]" id="day">
-			 	<label for="day">Date Published</label>
+				<input class="date inputText" class="date" type="text" name="content_nodes[day]" id="day" placeholder="YYYY-MM-DD">
+			 	<label class="active" for="day">Date Published</label>
 		 	</div>
 		</div> 			
 	 </div>
@@ -50,7 +63,7 @@
 			 	<label for="description">Description</label>
 			 </div>
 		</div>
-		<div class="col s6">
+		<div id="imagesr" class="col s6">
 			<input type="hidden" name="content_nodes[image_id]" id="uploadID" value="8">
 			<div class="input-field">
 				<p class="inputLabel"> Image </p>
@@ -88,6 +101,7 @@
 			 <a action="tag" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
 	 	</div>
 	 	<div id="imagePreview" class="notBook col s6">
+	 	<p id="imgMsg" class="green-text"></p>
 		 	<h5>Image Preview</h5>
 		 	<img id="imgPreview" class="responsive-img" src="http://www.engraversnetwork.com/files/placeholder.jpg">
 		 	<a id="acceptPreview" class="btn waves-effect waves-light center-align green" style="display:none">Accept</a>
@@ -96,16 +110,16 @@
 
 
 </form>
-<form class="addImage" action="/images" style="display:none">
-	<p id="imgMsg" class="green-text"></p>
+<!-- <form class="addImage" action="/images" style="display:none">
+	 
 	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 	 <div class="input-field">
 	 	<input type="text" name="images[img_source]" id="img_source">
 	 	<label for="img_source">Image Source</label>
 	 </div>
 	 <button class="btn waves-effect waves-light center-align" type="submit">Store</button>
-</form>
-<form class="addSource" action="/sources" style="display:none;">
+</form> -->
+<form class="addSource nestForm" action="/sources" style="display:none;">
 	<p id="sourceMsg" class="green-text"></p>
 	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 	<div class="input-field">
@@ -114,7 +128,7 @@
 	</div>
 	<button class="btn waves-effect waves-light center-align blue" type="submit">Create</button>
 </form>
-<form class="addTag" action="/tags" style="display:none;">
+<form class="addTag nestForm" action="/tags" style="display:none;">
 	<p id="tagMsg" class="green-text"></p>
  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
  <input type="hidden" name="timeline_id" value=<%= @timeline.id %>>
@@ -129,6 +143,7 @@
 </div>
 <script>
 	//Materialize Selects
+	$('#newFormLoading').hide();
 	$('.contentCategory').material_select();
 	$('#sourceList').select2();
 	$('#tagSelect').material_select();
@@ -139,10 +154,16 @@
 		yearRange: "1950:2020"
 
 	}); 
-
+$('#contentCreationForm').ajaxStart(function() {
+    $('#newFormLoading').show();
+}).ajaxComplete(function() {
+    $('#newFormLoading').hide();
+});
 // AUTO FILLING INPUTS
 	$('#link').change(function(){
+		
 		$.post('/get_title', { "url": $('#link').val() }, function(res) {
+			console.log(res);
 			$('#contenttitle').val(res.title);
 			$("label[for=contenttitle]").addClass('active');
 			$('#description').val(res.description);
@@ -165,6 +186,8 @@
 		} else if ($(this).val() == 2) {
 			$('label[for=link]').text("Embed code(iframe)");
 			$('.notBook').show();
+			$('#imagePreview').hide();
+			$('#imagesr').hide();
 		} else if ($(this).val() == 4) {
 			$('label[for=link]').text("ISBN");
 			$('.notBook').hide();
@@ -190,15 +213,11 @@
 
 	//YOU'RE WORKING ON THIS RIGHT NOW
 
-	$('.addImage').submit(function(){
-		$.post($(this).attr("action"), $(this).serialize(), function(res) {
-			$('#uploadID').val(res.id);
-			$('#image_source').val(res.img_source);
-			$('#imgMsg').html("You've successfully uploaded an image!");
-		})
-		return false;
-	})
 
+	$('#uploadPreview').click(function(){
+		$('#imgPreview').attr("src", $('#image_source').val());
+		$('#acceptPreview').show();
+	})
 
 
 	// Modal For Adding New Sources/Tags
