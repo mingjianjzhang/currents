@@ -1,0 +1,15 @@
+<h4> Here are some people who want to become admins </h4>
+<ul>
+<% @messages.each do |message| %>
+<li>
+<span><%= message.user.first_name %>  <%= message.user.last_name %></span>
+<form class="admin_maker" action="/request_admin" method="post">
+ <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+ <input type="hidden" name="user_id" value=<%= message.user.id %>>
+ <input type="hidden" name="timeline_id" value=<%= message.timeline_id %>>
+ <input type="hidden" name="status" value="2">
+<button class="btn waves-effect waves-light center-align" type="submit">Make Admin</button>
+</form>
+</li>
+<% end %>
+</ul>

@@ -1,0 +1,9 @@
+<select name="tags[]" id="tagsS" multiple>
+<option disabled selected>Choose...</option>
+	<% tags.each do |tag| %>
+		<option value="<%= tag.id %>"><%= tag.name %></option>
+<% end %>
+</select>
+<script>
+	$('#tagsS').material_select();
+</script>

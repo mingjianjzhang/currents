@@ -191,6 +191,7 @@ Content:
 BOLD LOOK
 Titles cannot be link, 
 You need to have sourcing there as well
+Hover, and the whole section looks pretty
 
 Line-spacing
 Make title clearer
@@ -214,8 +215,106 @@ do a crawl of page, put in suggested data
 
 
 
+10-23-2016
+Goals for today...
+Get select2 working and active on all selects....
+Set up basic user privileges/views
+Set up admin privileges.
+Set up actions menu/panel
+ --- just make it possible to add things.
+
+link http://www.usatoday.com/story/news/world/2016/10/23/syria-ceasefire-ends-aleppo-bombing-resumes/92649360/
+
+okay.
+FINAL FEATURE SET
+Data Entry:
+Refugee crisis
+Syria
+Arab Spring
+  Tunisia
+  Egypt
 
 
+
+<!-- 0. Add image column to each piece of content, do data entry for that as well. <%GOOD JOB%> -->
+<!-- 1. make sure that adding content works with no hitches -->
+  steps:
+
+
+
+2. crawl through links in order to autofill fields
+3. Data entry for other timelines, make sure you can do it all through the website
+4. Implement collapsible force graph
+5. Get keyword searches working
+<!-- 6. User curated views - not sure how this is going to work -->
+-- Link up with WorldCat for books
+-- 
+7. User Dashboard...
+8. Admin Dashboard ...
+  8a) Admin should have to approve user submitted content
+9. Snapshots
+  9a) "Custom Views" should work on the timeline, with custom groupings
+   b) Admins can create snapshots, so then the query is going to be by Snapshots, a group, by title, get all snapshots where name = wooops
+10. Make loading animations for all ajax posts
+11. Size of forcegraph is based on how much content there is for each graph
+
+REACH GOALS:
+12. Cool updating and deleting ... you click on update or delete, the whole screen is grayed out except for content and navigation, then once you click within the div, the option will show to delete or update the selected item.
+
+
+
+Event
+  Resources
+    Total Donations
+Event
+  Resources
+    Total Donations
+Event
+  Resources
+    Total Donations
+    package = [];
+    events = Event.includes(resources)
+    events.each do |event| 
+      item = {}
+      item[:event] = event
+      item[:resources] = {};
+      { info: (allinfo), sum:, }
+      [
+      { "Dojo Graduation": (dojoinfo), "Resources": [
+
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations }, ]
+     
+
+
+
+
+
+
+
+
+      { "Dojo Graduation": (dojoinfo), "Resources": [
+
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations } 
+      { "Dojo Graduation": (dojoinfo), "Resources": [
+
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations } ]
+      { "Dojo Graduation": (dojoinfo), "Resources": [
+
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations },
+                                                    { info: resource info, sum: total sum of donations } ] ]
+  
+
+...
+
+
+OK:
 
 
 

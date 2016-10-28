@@ -1,7 +1,25 @@
 class TimelinesController < ApplicationController
+  before_action :require_login, only: [:dashboard]
+  before_action :require_correct_user, only: [:dashboard]
+  def index
+    @timelines = Timeline.limit(5)
+  end
+  def home 
+    @timelines = Timeline.all
+  end
+
   def dashboard
   	@user = current_user
-  end
+    @user_timelines = User.find(@user.id).timelines
+    @admin = Admin.where(user_id: @user.id, )
+    if @admin.first
+      @admin_timelines = @admin.first.timelines
+
+    end 
+    @timeline = Timeline.find(2)
+    @contents = ContentNode.this_month(@timeline.id)
+    # render json: @user_timelines_content
+  end 
 
   def new
 
@@ -10,7 +28,7 @@ class TimelinesController < ApplicationController
   def create
   	timeline = Timeline.new(timeline_params)
   	if timeline.save
-  	  TimelineAdmin.add_admin session[:user_id], timeline.id
+  	  TimelineAdmin.add_admin session[:user_id], timeline.id, 1
   	  redirect_to :back, notice: "You have successfully created a timeline"
   	else
   	  redirect_to :back, alert: timeline.errors.full_messages
@@ -19,8 +37,13 @@ class TimelinesController < ApplicationController
 
   def show 
   	@timeline = Timeline.find(params[:id])
+    @is_admin = @timeline.admins.where(user_id: session[:user_id]).first
+    @is_subscriber = @timeline.users.where(id: session[:user_id]).first
   	@contents = ContentNode.everything(@timeline.id)
-    @keywords = Tag.all
+    @keywords = Tag.where(timeline_id: @timeline.id)
+    # @categories = Category.all
+    # @sources = Source.all
+    
   end
 
   def display_timeline
@@ -40,9 +63,21 @@ class TimelinesController < ApplicationController
   	render partial: "timelines/partials/clutser_timeline"
   end
 
+  def css_test
+    @timeline = Timeline.find(params[:id])
+    @contents = ContentNode.everything(@timeline.id)
+    @keywords = Tag.where(timeline_id: @timeline.id)
+    render "test"
+  end
+
   def display_timeline_keywords
     @timeline = Timeline.find(params[:id])
-    render json: params
+    @contents = ContentNode.by_keywords @timeline.id, params[:keywords], params[:logic]
+    if @contents == [] 
+      render text: "Sorry, there were no matches for your search"
+    else 
+      render partial: "timelines/partials/clutser_timeline"
+    end
   end 
 
   def display_timeline_date_range

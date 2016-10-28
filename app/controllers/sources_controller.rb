@@ -2,7 +2,7 @@ class SourcesController < ApplicationController
 	def create
 	  source = Source.new(source_params)
 	  if source.save
-	  	redirect_to :back
+	  	render partial: "sources/partials/sources_list", locals: { sources: Source.all }
 	  else
 	  	flash[:error] = "whoops"
 	  end

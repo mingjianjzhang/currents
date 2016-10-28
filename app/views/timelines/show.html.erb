@@ -1,7 +1,5 @@
-
+<%= render "shared/real_header"%>
   <ul id="slide-out" class="side-nav fixed">
-  	<li><h3 class="center-align"><%= @timeline.title %></h3></li>
-  	  <li><div class="divider"></div></li>
   	 <li><a class="subheader">View Settings</a></li>
     <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
@@ -48,20 +46,22 @@
             <div class="collapsible-body">
               <ul>
                 <li>
-                	        <div class="container">
+           <div class="container">
 			<form id="dateRange" action="/date_query/<%= @timeline.id %>" method="post">
 				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 				<div class="row">
-					<div class="col s6">
+					<div class="col s12">
 					<div class="input-field">
 						<span>From:</span>
-						<input type="text" class="date" name="begin_date" id="beginDate">
+						<input type="text" class="date searchDate" name="begin_date" id="beginDate">
 					</div>
 					</div>
-					<div class="col s6">
+				</div>
+				<div class="row">
+					<div class="col s12">
 					<div class="input-field">
 						<span>To:</span>
-						<input type="text" class="date" name="end_date" id="endDate">
+						<input type="text" class="date searchDate" name="end_date" id="endDate">
 					</div>
 					</div>
 				</div>
@@ -82,13 +82,20 @@
               <ul>
                 <li>
                   <div class="container">
-					<form action="/tag_query/<%= @timeline.id %>" method="post">
+					<form id="keywordSearch" action="/tag_query/<%= @timeline.id %>" method="post">
 					 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+					 <select id="logic" name="logic">
+					 	<option disabled selected>Search Logic</option>
+						<option value="0">AND</option>
+						<option value="1">OR</option>
+					 </select>
+           <% if @keywords %>
 					 <% @keywords.each do |tag| %>
 						
-							<input type="checkbox" id="tag<%= tag.id %>" name="keywords[]" value="<%= tag.name %>">
+							<input type="checkbox" id="tag<%= tag.id %>" name="keywords[]" value="<%= tag.id %>">
 							<label for="tag<%= tag.id %>"><%= tag.name %></label>
 						
+          <% end %>
 					<% end %>
 					<button class="btn waves-effect waves-light center-align" type="submit">Update View</button>
 					</form>
@@ -99,15 +106,12 @@
           </li>
         </ul>
        </li>
-    <li>
-    	<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="Longform">Western Media</a>
-    </li>
-  
 
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  
 
   	  <li><div class="divider"></div></li>
 	<li style="padding-top: 6em">
+	<% if !(@is_admin || @is_subscriber || !session[:user_id]) %>
 	<div class="center-align">
 	<form action="/subscribe" method="post">
 		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
@@ -115,32 +119,54 @@
 		 <input type="hidden" name="timeline_users[timeline_id]" value=<%= @timeline.id %>>
 		<button class="btn waves-effect waves-light center-align" type="submit">Subscribe</button>
 	</form>
+	<% end %>
+  <% if @is_subscriber && !@is_admin %>
+    <form action="/handle_request" method="post">
 
+    
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <input type="hidden" name="_method" value="patch">
+     <input type="hidden" name="user_id" value=<%= session[:user_id] %>>
+     <input type="hidden" name="timeline_id" value=<%= @timeline.id %>>
+    <button class="btn waves-effect waves-light center-align" type="submit">Request Admin</button>
+  </form>
+  <% end %>
 	</li>
 </ul>
-<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+<a href="#" data-activates="slide-out" class="button-collapse"></a>
 </div>
+
 <div id="main">
+<h3> <%= @timeline.title %> </h3>
+<p id="queryParameters">From the Beginning</p>
+<!-- Where the partial is rendered -->
 	<div id="timelineDisplay">
-	<%= render partial: "timelines/partials/clutser_timeline" %>
+
 	</div>
-	  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<!-- ****** -->
+<% if @is_admin %>
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a class="btn-floating btn-large red">
       <i class="large material-icons">mode_edit</i>
     </a>
     <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
       <li>
-      	<a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a>
+      	<a class="addContentMod btn-floating yellow darken-1" location="/messages/<%= @timeline.id %>" function="messages"><i class="material-icons">format_quote</i></a>
       </li>
       <li>
       <div>
-      	<a class="btn-floating green"><i class="material-icons">publish</i></a>
-      	<span class="tooltip">Hello</span>
+      	<a class= "addContentMod btn-floating green" location="/add_content/<%= @timeline.id %>" function="add_content"><i class="material-icons">publish</i></a>
       </div>
       </li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
     </ul>
   </div>
-
+<% end %>
 </div>
+  <div id="addContentModal" class="modal">
+    <div class="modal-content">
+      <div id="modalContents" class="container">
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>

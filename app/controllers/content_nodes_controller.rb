@@ -7,18 +7,36 @@ class ContentNodesController < ApplicationController
 
   def create
     params.permit!
+    @timeline = Timeline.find(params[:timeline_id])
+    @categories = Category.all
+    @sources = Source.all 
+    @keywords = Tag.all
   	content = ContentNode.new(content_nodes_params)
   	if content.save
-      ContentTag.create(content_node_id: content.id, tag_id: params[:tagsS])
-      TimelineContent.create(content_node_id: content.id, timeline_id: 2)
-  	  redirect_to :back, notice: "You have successfully added a piece of content"
+      ContentTag.add_tags content.id, params[:tags]
+      TimelineContent.create(content_node_id: content.id, timeline_id: params[:timeline_id])
+  	  render partial: "content_nodes/partials/new", locals: { notice: "You have successfully added a piece of content" }
   	else
-      redirect_to :back, alert: content.errors.full_messages
+      render partial: "content_nodes/partials/new", locals: { alert: content.errors.full_messages }
     end
+  end 
+
+  def get_title
+    crawler = Crawler.new
+    render json: crawler.obtain(params[:url])
   end
+  def get_content 
+    @timeline = Timeline.find(params[:id])
+    @keywords = Tag.where(timeline_id: @timeline.id)
+    @categories = Category.all
+    @sources = Source.all
+    
+    render partial: "content_nodes/partials/new"
+  end
+  
   private
   def content_nodes_params
-  	params.require(:content_nodes).permit(:title, :link, :description, :category_id, :source_id, :day)
+  	params.require(:content_nodes).permit(:title, :link, :description, :category_id, :source_id, :image_id, :day)
   end
   def snapshot_nodes_params
   	params.require(:snapshot_nodes).permit(:content_node_id, :snapshot_id)

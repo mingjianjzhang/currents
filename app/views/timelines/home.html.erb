@@ -1,0 +1,28 @@
+<%= render "shared/real_header"%>
+<div id="graphTest">
+
+</div>
+<div id="mainContainer" class="green">
+
+<div id="homeSearch" class="center-align">
+<h5> I want to learn more about ...</h5>
+<div class="center-align" style="width: 40%; display: inline-block">
+<select id="searchSelect" style="width: 18rem">
+	<%= @timelines.each do |timeline| %>
+	<option value="<%= timeline.id %>"><%= timeline.title %></option>
+	<% end %>
+</select>
+</div>
+<div id="goButton">
+<a id="goBut" href="" class="btn waves-effect waves-light center-align black">Go</a>
+</div>
+</div>
+</div>
+	<div id="loginRegModal" class="modal">
+		<div class="modal-content">
+ 			<div class="container">
+ 			</div>
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>

@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     TimelineUser.create(timeline_users_params)
     redirect_to :back, notice: "You have successfully subscribed to this timeline"
   end
+  def login_reg 
+    render partial: "shared/loginreg"
+  end   
   private
   def user_params
   	params.require(:user).permit(:first_name, :last_name, :username, :email, :password, :password_confirmation)

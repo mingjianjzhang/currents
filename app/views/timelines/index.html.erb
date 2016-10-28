@@ -1,0 +1,14 @@
+<%= render partial: "shared/real_header" %>
+<div class="container">
+<h4 id="timelineLabel"></h5><a href="" id="timelineNav" class="btn waves-effect waves-light center-align" type="submit">Go to Timeline</a>
+<div id="timelinePreview">
+</div>
+ 
+<ul id="allTimelines">
+<% @timelines.each do |timeline| %>
+<li>
+	<a class="previewTimeline btn waves-effect waves-light center-align" timeline="<%= timeline.id %>"><%= timeline.title %></a>
+</li>
+<% end %>
+</ul>
+</div>

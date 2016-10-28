@@ -1,0 +1,25 @@
+<nav class="black white-text fixed">
+	<div class="nav-wrapper">
+		<div class="container">
+		<a href="/" class="brand-logo">Currents</a>
+		<ul class="right">
+			<li>
+			<a href="/timelines">Browse<i class="material-icons right">view_carousel</i></a>
+			</li>
+			<li>
+			<% if session[:user_id] %>
+				<a href="/dashboard/<%= session[:user_id] %>">Dashboard<i class="material-icons right">dashboard</i></a>
+			<% end %>
+			</li>
+			<li>
+			<% if !session[:user_id] %>
+				<a action="login" class="regMod" href="#!">Login<i class="material-icons right">account_circle</i></a>
+		 	<% else %>
+		 		<a href="/logout" data-method="delete">Logout<i class="material-icons right">exit_to_app</i></a>
+		 	<% end %>
+		 	</li>
+		
+		</ul>
+		</div>
+	</div>
+</nav>

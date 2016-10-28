@@ -1,6 +1,28 @@
-<div class='container'>
-	<div class="row">
-		<div class="col s6">
+<script>
+	$('#registerForm').click(function(){
+		$('#loginForm').hide();
+		$('#regForm').show();
+	})
+</script>
+			<div id="loginForm">
+			<h5> Login </h5>
+			<p class="red-text"><%= flash[:bad_password] %></p>
+			<p class="red-text"><%= flash[:no_user] %></p>
+			<form action="/login" method="post">
+				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<div class="input-field">
+					<input type="text" name="email" id="email">
+					<label for="email">Email</label>
+				</div>
+				<div class="input-field">
+					<input type="password" name="password" id="password">
+					<label for="password">Password</label>
+				</div>
+				<button class="btn waves-effect waves-light center-align" type="submit">Log In</button>
+			</form>
+				<a action="register" id="registerForm">Register</a>
+			</div>
+			<div id="regForm" style="display:none">
 			<h5> Register </h5>
 <% if flash[:errors] %>
 <% flash[:errors].each do |error| %>
@@ -37,13 +59,4 @@
 				</div>
 				<button class="btn waves-effect waves-light center-align" type="submit">Register</button>
 			</form>
-		</div>
-		<div class="col s6">
-
-
-
-
-
-		</div>
-	</div>
-</div>
+			</div>

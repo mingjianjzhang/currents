@@ -1,4 +1,23 @@
-<%= render "shared/header" %>
+<%= render "shared/real_header" %>
 <div class="container">
+<h4 id="timelineLabel"></h5><a id="timelineNav" href="" class="btn waves-effect waves-light center-align black">Go to Timeline</a>
+<div id="timelinePreview">
+
+</div>
+ 
+<h4>Subscribed Timelines</h4>
+<% @user_timelines.each do |timeline| %>
+<a class="previewTimeline btn waves-effect waves-light center-align" timeline="<%= timeline.id %>">
+	<%= timeline.title %>
+</a>
+<% end %>
+<h4>Managed Timelines</h4>
+<% if @admin_timelines %>
+<% @admin_timelines.each do |timeline| %>
+<a class="previewTimeline btn waves-effect waves-light center-align light-blue darken-4" timeline = <%= timeline.id %>><%= timeline.title %></a>
+<% end %>
+<% end %>
+
+
 
 </div>

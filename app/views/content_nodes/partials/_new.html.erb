@@ -1,11 +1,13 @@
-<p><%= flash[:notice] %></p>
-<% if flash[:alert] %>
-  <% flash[:alert].each do |alert| %>
+<div id="contentCreationForm">
+<p><%= notice %></p>
+<% if alert %>
+  <% alert.each do |alert| %>
 	<p class="red-text"><%= alert %> </p>
   <% end %>
 <% end %>
-<form action="/contents" method="post">
+<form id="creatingContent" action="/contents" method="post">
 	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	 <input type="hidden" name="timeline_id" value="<%= @timeline.id %>">
 	 <div class="row">
 		<div class="col s6">
 			<div class="input-field">
@@ -20,7 +22,7 @@
 		</div>
 		<div class="col s6">
 			<div class="linkInputs input-field" style="display:none">
-				<input type="text" name="content_nodes[link]" id="link">
+				<input class="inputText" type="text" name="content_nodes[link]" id="link">
 				<label for="link"></label>
 			</div>			
 		</div>
@@ -29,76 +31,196 @@
 	 <div class="row">
 	 	<div class="col s6">
 	 		<div class="input-field">
-	  			<input type="text" name="content_nodes[title]" id="contenttitle">
+	  			<input class="inputText" type="text" name="content_nodes[title]" id="contenttitle">
 	  			<label for="contenttitle">Title</label>
 	 		</div> 
 	 	</div>
 	 	<div class="col s6">
 		 	<div class="input-field">
-				<input class="date" type="text" name="content_nodes[day]" id="description">
-			 	<label for="description">Date Published</label>
+				<input class="date inputText" class="date" type="text" name="content_nodes[day]" id="day">
+			 	<label for="day">Date Published</label>
 		 	</div>
 		</div> 			
 	 </div>
-	 <div class="notBook">
+
+	 <div class="notBook row">
+		<div class="col s6">
+			<div class="input-field">
+				<textarea class="inputText materialize-textarea" name="content_nodes[description]" id="description"></textarea>
+			 	<label for="description">Description</label>
+			 </div>
+		</div>
+		<div class="col s6">
+			<input type="hidden" name="content_nodes[image_id]" id="uploadID" value="8">
+			<div class="input-field">
+				<p class="inputLabel"> Image </p>
+				<input class="inputText" name="image_source" id="image_source" type="text">
+				
+			</div>
+				<a action="image" class="addMod btn waves-effect waves-light center-align">Upload Image</a>
+		</div>
+	</div>
 	 <div class="row">
 	 	<div class="col s6">
 			<div class="input-field">
-				<select class="contentCategory" name="content_nodes[source_id]" id="sourceS">>
+				<p class="inputLabel"> Source </p>
+				<select id = "sourceList" class="propSelect" name="content_nodes[source_id]" id="sourceS">>
 					<option disabled selected>Choose...</option>
 					<% @sources.each do |source| %>
 						<option value="<%= source.id %>"><%= source.name %></option>
 					<% end %>
 				</select>
-				<label for="sourceS">Source</label>
-				<a action="/sources" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Source</a>
+
+				<a action="source" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Source</a>
 			</div>
-	 	</div>
-	 	<div class="col s6">
-		 	<div class="input-field">
-				<select name="tagsS" id="tagsS" multiple>
+			<div id="tagList" class="input-field">
+		 		<p class="inputLabel"> Tags </p>
+				<select id = "tagSelect" name="tags[]" multiple>
 					<option disabled selected>Choose...</option>
-					<% @tags.each do |tag| %>
+					<% if @keywords %>
+					<% @keywords.each do |tag| %>
 					<option value=<%=tag.id%>><%= tag.name %></option>
 					<% end %>
+					<% end %>
 				</select>
-				<label for="tagsS">Tags</label>
-				<a class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
+				
+				<a action="tag" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Tag</a>
 			 </div>
+	 	</div>
+	 	<div id="imagePreview" class="notBook col s6">
+		 	<h5>Image Preview</h5>
+		 	<img id="imgPreview" class="responsive-img" src="http://www.engraversnetwork.com/files/placeholder.jpg">
+		 	<a id="acceptPreview" class="btn waves-effect waves-light center-align green" style="display:none">Accept</a>
 		</div>
 	</div>
-	 <div class="row">
-		<div class="col s12">
-			<div class="input-field">
-				<textarea class="materialize-textarea" name="content_nodes[description]" id="description"></textarea>
-			 	<label for="description">Description</label>
-			 </div>
-		</div>
-	</div>
-	</div>
-	 <button class="btn waves-effect waves-light center-align" type="submit">Add</button>
-</form>
 
-	<div id="addModal" class="modal">
-		<div class="modal-content">
-			<div class="container">
-				<form class="addSource" action="/sources" method="post" style="display:none;">
-					 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-					<div class="input-field">
-						<input type="text" name="sources[name]" id="sourceI">
-			 			<label for="sourceI">Source</label>
-					</div>
-					<button class="btn waves-effect waves-light center-align" type="submit">Create</button>
-				</form>
-				<form class="addTag" action="/tags" method="post" style="display:none;">
-				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-				 <p> List as many tags as you would like, separated by a comma and a space. 
-					<div class="input-field">
-						<input type="text" name="tags" id="tagsI">
-			 			<label for="tagsI">Tags</label>
-					</div>
-					<button class="btn waves-effect waves-light center-align" type="submit">Create</button>
-				</form>
-			</div>
-		</div>
+
+</form>
+<form class="addImage" action="/images" style="display:none">
+	<p id="imgMsg" class="green-text"></p>
+	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	 <div class="input-field">
+	 	<input type="text" name="images[img_source]" id="img_source">
+	 	<label for="img_source">Image Source</label>
+	 </div>
+	 <button class="btn waves-effect waves-light center-align" type="submit">Store</button>
+</form>
+<form class="addSource" action="/sources" style="display:none;">
+	<p id="sourceMsg" class="green-text"></p>
+	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<div class="input-field">
+		<input type="text" name="sources[name]" id="sourceI">
+			<label for="sourceI">Source</label>
 	</div>
+	<button class="btn waves-effect waves-light center-align blue" type="submit">Create</button>
+</form>
+<form class="addTag" action="/tags" style="display:none;">
+	<p id="tagMsg" class="green-text"></p>
+ <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+ <p> List as many tags as you would like, separated by a comma and a space. </p>
+	<div class="input-field">
+		<input type="text" name="tags" id="tagsI">
+			<label for="tagsI">Tags</label>
+	</div>
+	<button class="btn waves-effect waves-light center-align green" type="submit">Create</button>
+</form>
+<a class="createContent btn waves-effect waves-light center-align">Add Content</a>
+</div>
+<script>
+	//Materialize Selects
+	$('.contentCategory').material_select();
+	$('#sourceList').select2();
+	$('#tagSelect').material_select();
+
+// AUTO FILLING INPUTS
+	$('#link').change(function(){
+		$.post('/get_title', { "url": $('#link').val() }, function(res) {
+			$('#contenttitle').val(res.title);
+			$("label[for=contenttitle]").addClass('active');
+			$('#description').val(res.description);
+			$("label[for=description]").addClass('active');
+			$('#image_source').val(res.image);
+			$('#imgPreview').attr("src", res.image);
+			if (res.image) {
+				$('#acceptPreview').show();
+			}
+		})
+	})
+
+	$('.contentCategory').change(function(){
+		$('.linkInputs').show();
+		$('#contentCreationForm .inputText').val("");
+
+		if($(this).val() == 1) {
+			$('label[for=link]').text("Link");
+			$('.notBook').show();
+		} else if ($(this).val() == 2) {
+			$('label[for=link]').text("Embed code(iframe)");
+			$('.notBook').show();
+		} else if ($(this).val() == 4) {
+			$('label[for=link]').text("ISBN");
+			$('.notBook').hide();
+			$('.addSource').hide();
+			$('.addTag').hide();
+			$('.addImage').hide();
+		}
+	})
+	$('.addSource').submit(function(){
+		$.post($(this).attr("action"), $(this).serialize(), function(res){
+			$('#sourceList').html(res);
+			$('#sourceMsg').text("You've successfully added a source!");
+		})
+		return false;
+	})
+	$('.addTag').submit(function(){
+		$.post($(this).attr("action"), $(this).serialize(), function(res) {
+			$('#tagList').html(res);
+			$('#tagMsg').html("You've successfully added a tag!")
+		})
+		return false;
+	})
+
+	//YOU'RE WORKING ON THIS RIGHT NOW
+
+	$('.addImage').submit(function(){
+		$.post($(this).attr("action"), $(this).serialize(), function(res) {
+			$('#uploadID').val(res.id);
+			$('#image_source').val(res.img_source);
+			$('#imgMsg').html("You've successfully uploaded an image!");
+		})
+		return false;
+	})
+
+
+
+	// Modal For Adding New Sources/Tags
+	$('.addMod').click(function(){
+		if ($(this).attr('action') == "source") { 
+			$('.addSource').show();
+			$('.addTag').hide();
+			$('.addImage').hide();
+		} else if ($(this).attr('action') == "image") {
+			$('.addSource').hide();
+			$('.addTag').hide();	
+			$('.addImage').show();		
+		} else if ($(this).attr('action') == "tag") {
+			$('.addSource').hide();
+			$('.addTag').show();	
+			$('.addImage').hide();
+		}
+	})
+	$('.createContent').click(function(){
+		$.post($('#creatingContent').attr("action"), $('#creatingContent').serialize(), function(res) {
+			$('#contentCreationForm').html(res);
+			
+		})
+	})
+
+	$('#acceptPreview').click(function(){
+		$.post("/images", { "images[img_source]": $('#imgPreview').attr('src') }, function(res) {
+			$('#uploadID').val(res.id);
+			$('#image_source').val(res.img_source);
+			$('#imgMsg').html("You've successfully uploaded an image!");
+		})
+	})
+</script>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var timelines = $('.cd-horizontal-timeline'),
-		eventsMinDistance = 40;
+		eventsMinDistance = 90;
 
 	(timelines.length > 0) && initTimeline(timelines);
 
@@ -17,6 +17,7 @@ $(document).ready(function(){
 			timelineComponents['eventsMinLapse'] = minLapse(timelineComponents['timelineDates']);
 			timelineComponents['timelineNavigation'] = timeline.find('.cd-timeline-navigation');
 			timelineComponents['eventsContent'] = timeline.children('.events-content');
+			timelineComponents['eventsIndex'] = timeline.find('.indexEvents');
 
 			//assign a left postion to the single events along the timeline
 			setDatePosition(timelineComponents, eventsMinDistance);
@@ -24,6 +25,25 @@ $(document).ready(function(){
 			var timelineTotWidth = setTimelineWidth(timelineComponents, eventsMinDistance);
 			//the timeline has been initialize - show it
 			timeline.addClass('loaded');
+
+			timelineComponents['eventsIndex'].on('click', '.datedLink', function(event){
+				var selectedDate = timelineComponents['eventsWrapper'].find('.selected')
+				timelineComponents['timelineEvents'].removeClass('selected');
+				rightLink = $('a[data-date="'+$(this).attr("dated")+'"]')
+				if (Date.parse(selectedDate.text()) > Date.parse(rightLink.text())) {
+					string = "prev"
+				} else {
+					string = "next"
+				}
+				rightLink.addClass('selected');
+				updateOlderEvents(rightLink);
+				updateFilling(rightLink, timelineComponents['fillingLine'], timelineTotWidth);
+				updateVisibleContent(rightLink, timelineComponents['eventsContent']);
+				updateTimelinePosition(string, rightLink, timelineComponents);
+			})
+
+
+
 
 			//detect click on the next arrow
 			timelineComponents['timelineNavigation'].on('click', '.next', function(event){
@@ -43,6 +63,7 @@ $(document).ready(function(){
 				updateOlderEvents($(this));
 				updateFilling($(this), timelineComponents['fillingLine'], timelineTotWidth);
 				updateVisibleContent($(this), timelineComponents['eventsContent']);
+
 			});
 
 			//on swipe, show next/prev event content
@@ -284,5 +305,21 @@ $(document).ready(function(){
 		//check if mobile or desktop device
 		return window.getComputedStyle(document.querySelector('.cd-horizontal-timeline'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
 	}
+
+	$('.showIndex').click(function(e){
+		$('#resultsIndex').slideDown();
+		e.stopPropagation();
+	})
+
+	$(document).on("mouseleave", "#resultsIndex", function(){
+		console.log("hello")
+		$(this).slideUp();
+
+	})
+	// $('#resultsIndex').mouseout(function(){
+		// if ($(this).css("display") == "block") {
+			// e.stopPropagation();
+		// }
+	// })
 });
 

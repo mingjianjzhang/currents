@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022180939) do
+ActiveRecord::Schema.define(version: 20161028011804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,13 +35,15 @@ ActiveRecord::Schema.define(version: 20161022180939) do
     t.string   "link"
     t.text     "description"
     t.integer  "category_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.date     "day"
     t.integer  "source_id"
+    t.integer  "image_id",    default: 8
   end
 
   add_index "content_nodes", ["category_id"], name: "index_content_nodes_on_category_id", using: :btree
+  add_index "content_nodes", ["image_id"], name: "index_content_nodes_on_image_id", using: :btree
   add_index "content_nodes", ["source_id"], name: "index_content_nodes_on_source_id", using: :btree
 
   create_table "content_tags", force: :cascade do |t|
@@ -53,6 +55,12 @@ ActiveRecord::Schema.define(version: 20161022180939) do
 
   add_index "content_tags", ["content_node_id"], name: "index_content_tags_on_content_node_id", using: :btree
   add_index "content_tags", ["tag_id"], name: "index_content_tags_on_tag_id", using: :btree
+
+  create_table "images", force: :cascade do |t|
+    t.string   "img_source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "snapshot_nodes", force: :cascade do |t|
     t.integer  "content_node_id"
@@ -83,15 +91,19 @@ ActiveRecord::Schema.define(version: 20161022180939) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "timeline_id"
   end
+
+  add_index "tags", ["timeline_id"], name: "index_tags_on_timeline_id", using: :btree
 
   create_table "timeline_admins", force: :cascade do |t|
     t.integer  "timeline_id"
     t.integer  "admin_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "status"
   end
 
   add_index "timeline_admins", ["admin_id"], name: "index_timeline_admins_on_admin_id", using: :btree
@@ -112,6 +124,7 @@ ActiveRecord::Schema.define(version: 20161022180939) do
     t.integer  "timeline_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "request"
   end
 
   add_index "timeline_users", ["timeline_id"], name: "index_timeline_users_on_timeline_id", using: :btree
@@ -135,12 +148,14 @@ ActiveRecord::Schema.define(version: 20161022180939) do
 
   add_foreign_key "admins", "users"
   add_foreign_key "content_nodes", "categories"
+  add_foreign_key "content_nodes", "images"
   add_foreign_key "content_nodes", "sources"
   add_foreign_key "content_tags", "content_nodes"
   add_foreign_key "content_tags", "tags"
   add_foreign_key "snapshot_nodes", "content_nodes"
   add_foreign_key "snapshot_nodes", "snapshots"
   add_foreign_key "snapshots", "timelines"
+  add_foreign_key "tags", "timelines"
   add_foreign_key "timeline_admins", "admins"
   add_foreign_key "timeline_admins", "timelines"
   add_foreign_key "timeline_contents", "content_nodes"

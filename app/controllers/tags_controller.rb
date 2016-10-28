@@ -1,5 +1,8 @@
 class TagsController < ApplicationController
 	def create
+		if tags = ""
+		  render partial: "tags/partials/tags_list", locals: { tags: Tag.all }
+		end
 		tags = params[:tags].split(', ')
 		tags.each do |tag|
 		  new_tag = Tag.new(name: tag.capitalize)
@@ -9,8 +12,8 @@ class TagsController < ApplicationController
 		  	flash.now[:error] = "That tag already exists"
 		  end
 		end
-		redirect_to :back
-
+		render partial: "tags/partials/tags_list", locals: { tags: Tag.all }
 	end
 	
 end
+ 

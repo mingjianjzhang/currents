@@ -3,12 +3,12 @@
 <section class="cd-horizontal-timeline loaded">
 	<div class="timeline">
 		<div class="events-wrapper">
-			<div class="events">
+			<div class="events" style="width: 100%">
 				<ol> 
 
 <% @contents.each do |cluster| %>
 					<li>
-						<a href="#0" class="<%= 'selected' if cluster == @contents.first %>" data-date="<%= cluster[:date].strftime('%d/%m/%Y') %>"><%= cluster[:date].strftime('%b %d')%></a>
+						<a href="#0" class="<%= 'selected' if cluster == @contents.first %>" data-date="<%= cluster[:date].strftime('%d/%m/%Y') %>"><%= cluster[:date].strftime('%m/%d/%Y')%></a>
 					</li>
 <% end %>
 				</ol> 
@@ -22,20 +22,33 @@
 			<li><a href="#0" class="next">Next</a></li>
 		</ul> <!-- .cd-timeline-navigation -->
 	</div> <!-- .timeline -->
-
+	<div class="indexEvents">
+  <a class='showIndex' href='#'>Search Index</a>
+  <ul class="orange accent-1" id='resultsIndex'>
+ <% @contents.each do |cluster| %>
+	<% cluster[:contents].each do |content| %>
+	<li>
+		<a class="datedLink" href="#!" dated="<%= content.day.strftime('%d/%m/%Y') %>"><%= content.title %></a>
+	</li>
+	<% end %>
+<% end %>
+  </ul>
+	</div>
 	<div class="events-content">
 		<ol>
 
 <% @contents.each do |cluster| %>
 
 			<li class="<%= 'selected' if cluster == @contents.first %>" data-date="<%= cluster[:date].strftime('%d/%m/%Y') %>">
+			<div class="row">
 				<h4><%= cluster[:date].strftime('%B %d, %Y')%></h4>
-
+			</div>
 				<% cluster[:contents].each do |content| %>
-				<% if content[:content].category_id == 4 %>
+				<% if content.category_id == 4 %>
+				<div class="row">
 				<script>
-					$.get("https://www.googleapis.com/books/v1/volumes?q=isbn:9781908323125", function(res){
-						$('#book<%= content[:content].category.id %>').html(
+					$.get("https://www.googleapis.com/books/v1/volumes?q=isbn:<%= content.link %>", function(res){
+						$('#book<%= content.id %>').html(
 						"<div class='row'>" + 
 						"<div class='col s3'>" + 
 						"<h4><img src='" + res.items[0].volumeInfo.imageLinks.thumbnail + "'>" +
@@ -43,32 +56,89 @@
 						"<div class='col s9'>" +
 						"<h4><a href='" +  res.items[0].accessInfo.webReaderLink + "' target='_blank'>" + res.items[0].volumeInfo.title + "</a></h4>" +
 						"<h5> By " + res.items[0].volumeInfo.authors[0] + "</h5>" +
-						"<p>" + res.items[0].volumeInfo.description + "</p>" +
+						"<p class='limitText'>" + res.items[0].volumeInfo.description + "</p>" +
 						"</div>" +
 						"</div>"
 						);
 					})
 				</script>
-				<div id="book<%= content[:content].category.id %>"></div>
-				
-				<% elsif content[:content].category_id == 1 %>
-				<h5><a href="<%= content[:content].link %>" target="_blank"><%= content[:content].title %></a></h5>
-				<% elsif content[:content].category_id == 2 %>
-				<h5><%= content[:content].title %></h5>
-				<div id="embed<%= content[:content].id %>">
-				</div>
-				<%= raw content[:content].link %>
-
-				<% end %>
-				<p><%= content[:content].description %></p>
+				<div id="book<%= content.id %>"></div>
+				<div class="row">
+					<div class="col s3">
+						<div class="input-field">
+							<input type="text" name="zipSearch" id="zipSearch<%= content.id %>" placeholder="Zip Code">
+							<label for="zipSearch">Search Libraries Near You</label>
+						</div>
+						<script>
+						$('#zipSearch<%= content.id %>').change(function(){ 
+							$.post("/library_info", { "isbn" : <%= content.link %> , "zip" : $(this).val() }, function(res) {
+								$('#library<%= content.id %>').html(res)
+							})
+						})
+						</script>
+						<div id="library<%= content.id %>">
+							
+						</div>
+					</div>
+					<div class="col s9">
+				<!-- TAGS -->
 				<p class="endOfContent"> Tags: 
-				<% for i in 0...content[:tags].length %>
-					<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content[:tags][i].name %>"><%= content[:tags][i].name %></a>
-					<% if i != content[:tags].length - 1 %>
+				<% for i in 0...content.tags.length %>
+					<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+					<% if i != content.tags.length - 1 %>
 					, 
 					<% end %>
 				<% end %>
 				</p>
+				</div>
+				</div>
+				</div>
+				<!-- END TAGS -->
+				<% elsif content.category_id == 2 %>
+				<div class="row">
+					<div class="col s4">
+						<div id="embed<%= content.id %>" class="video-container">
+							<%= raw content.link %>
+						</div>
+					</div>
+					<div class="col s8">
+						<h5><%= content.title %></h5>
+						<p><%= content.source.name %></p>
+						<p><%= content.description %></p>
+ 
+				<!-- TAGS -->
+
+						<p class="endOfContent"> Tags: 
+						<% for i in 0...content.tags.length %>
+							<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+							<% if i != content.tags.length - 1 %>
+							, 
+							<% end %>
+						<% end %>
+						</p>
+					</div>
+				</div>
+				<!-- END TAGS -->
+				<% elsif content.category_id == 1 %>
+				<div class="row">
+					<div class="col s4">
+						<img class="responsive-img" src="<%= content.image.img_source %>">
+					</div>
+					<div class="col s8">
+						<h5><a href="<%= content.link %>" target="_blank"><%= content.title %></a></h5>
+						<p><%= content.source.name %></p>
+						<p><%= content.description %></p>
+						<p class="endOfContent"> Tags: 
+							<% for i in 0...content.tags.length %>
+								<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+								<% if i != content.tags.length - 1 %>
+								, 
+								<% end %>
+							<% end %>
+						</p>
+					</div>
+				</div>
+				<% end %>
 				<% end %>
 
 			</li>
@@ -76,4 +146,5 @@
 			
 		</ol>
 	</div> <!-- .events-content -->
+
 </section>

@@ -1,0 +1,6 @@
+<% @libraries.first(5).each do |library| %>
+<a href="<%= library[:link] %>" target="_blank">
+	<h4><%= library[:name] %></h4>
+	<p><%= library[:location] %></p>
+</a>
+<% end %>
