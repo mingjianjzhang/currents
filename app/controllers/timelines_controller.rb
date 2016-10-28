@@ -16,8 +16,10 @@ class TimelinesController < ApplicationController
       @admin_timelines = @admin.first.timelines
 
     end 
-    @timeline = Timeline.find(2)
-    @contents = ContentNode.this_month(@timeline.id)
+    @timeline = Timeline.first
+    if @timeline
+      @contents = ContentNode.this_month(@timeline.id)
+    end
     # render json: @user_timelines_content
   end 
 
