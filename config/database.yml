@@ -82,4 +82,5 @@ test:
 production:
   <<: *default
   database: in_times_production
+  # username: in_times
   password: <%= ENV['IN_TIMES_DATABASE_PASSWORD'] %>

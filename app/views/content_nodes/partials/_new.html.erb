@@ -132,6 +132,13 @@
 	$('.contentCategory').material_select();
 	$('#sourceList').select2();
 	$('#tagSelect').material_select();
+	$('.date').datepicker({
+		dateFormat: "yy-mm-dd",
+		changeMonth: true,
+		changeYear: true,
+		yearRange: "1950:2020"
+
+	}); 
 
 // AUTO FILLING INPUTS
 	$('#link').change(function(){
