@@ -6,7 +6,7 @@
 		<div class="events-wrapper">
 			<div class="events">
 				<ol>
-					<li><a href="#0" data-date="16/01/2014" class="selected">Try another search</a></li>
+					<li><a href="#0" data-date="16/01/2014" class="selected">Nothing to see...</a></li>
 				</ol>
 				<span class="filling-line" aria-hidden="true"></span>
 			</div> <!-- .events -->
@@ -113,7 +113,7 @@
 				<!-- TAGS -->
 				<p class="endOfContent"> Tags: 
 				<% for i in 0...content.tags.length %>
-					<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+					<a href="#!" class="rusty-red-text keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
 					<% if i != content.tags.length - 1 %>
 					, 
 					<% end %>
@@ -130,7 +130,7 @@
 							<%= raw content.link %>
 						</div>
 					</div>
-					<div class="col s8">
+					<div class="articleLink col s8">
 						<h5><%= content.title %></h5>
 						<p><%= content.source.name %></p>
 						<p><%= content.description %></p>
@@ -139,7 +139,7 @@
 
 						<p class="endOfContent"> Tags: 
 						<% for i in 0...content.tags.length %>
-							<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+							<a href="#!" class="rusty-red-text keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
 							<% if i != content.tags.length - 1 %>
 							, 
 							<% end %>
@@ -161,7 +161,7 @@
 						</a>
 						<p class="endOfContent"> Tags: 
 							<% for i in 0...content.tags.length %>
-								<a href="#!" class="keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
+								<a href="#!" class="rusty-red-text keywordSearch" action="/display_timeline/<%= @timeline.id %>" keyword="<%= content.tags[i].name %>"><%= content.tags[i].name %></a>
 								<% if i != content.tags.length - 1 %>
 								, 
 								<% end %>

@@ -1,8 +1,8 @@
-<h4> Here are some people who want to become admins </h4>
+<h3 class="requestHeader rusty-red-text"> Admin Requests </h3>
 <ul>
 <% @messages.each do |message| %>
-<li>
-<span><%= message.user.first_name %>  <%= message.user.last_name %></span>
+<li class="oneRequest">
+<p><%= message.user.first_name %>  <%= message.user.last_name %></p>
 <form class="admin_maker" action="/request_admin" method="post">
  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
  <input type="hidden" name="user_id" value=<%= message.user.id %>>

@@ -49,7 +49,9 @@ $gun-metal: #233237;
 $rusty-red: #984B43;
 $warm-yellow: #EAC67A;
 
-
+.marginBottom {
+	margin-bottom: 20px;
+}
 #newFormLoading {
 	position: fixed;
 	top: 200px;
@@ -79,8 +81,16 @@ $warm-yellow: #EAC67A;
 	background-color: $rusty-red !important;
 	color: white;
 }
+
+.rusty-red-text {
+	color: $rusty-red !important;
+}
 .diff-text {
 	font-family: "Ovo", sans-serif;
+}
+.requestHeader {
+	padding: 10px 25px;
+	border-bottom: 4px solid black;
 }
 .goudy {
 	font-family: "Goudy Bookletter 1911", sans-serif !important;
@@ -95,9 +105,15 @@ $warm-yellow: #EAC67A;
 		float: right;
 	}
 	
-}svg {
+} 
+.oneRequest > *{
+	display: inline-block;
+}
+
+svg {
 	background-color: $gun-metal !important;
 }
+
 nav {
 	background-color: $navy-blue !important;
 	color: white !important;

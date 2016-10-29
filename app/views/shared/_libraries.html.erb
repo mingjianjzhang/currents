@@ -2,10 +2,10 @@
 <% if @libraries == [] %>
 <h5> Sorry, no results found </h5>
 <% else %>
+<h5> Libraries near you </h5>
 <% @libraries.first(5).each do |library| %>
 <a href="<%= library[:link] %>" target="_blank">
-	<h4><%= library[:name] %></h4>
-	<p><%= library[:location] %></p>
+	<p><%= library[:name] %></p>
 </a>
 <% end %>
 <% end %>

@@ -4,11 +4,11 @@
 		$('#regForm').show();
 	})
 </script>
-			<div id="loginForm">
+			<div id="loginForm" style="margin-bottom: 15px">
 			<h5> Login </h5>
 			<p class="red-text"><%= flash[:bad_password] %></p>
 			<p class="red-text"><%= flash[:no_user] %></p>
-			<form action="/login" method="post">
+			<form class="marginBottom" action="/login" method="post">
 				 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 				<div class="input-field">
 					<input type="text" name="email" id="email">
@@ -20,7 +20,8 @@
 				</div>
 				<button class="btn waves-effect waves-light center-align" type="submit">Log In</button>
 			</form>
-				<a action="register" id="registerForm">Register</a>
+					    <a action="register" class="btn waves-effect waves-light center-align" id="registerForm">Register</a>
+
 			</div>
 			<div id="regForm" style="display:none">
 			<h5> Register </h5>
@@ -49,12 +50,12 @@
 				</div>
 				
 				<div class="input-field">
-					<input type="text" name="user[password]" id="password">
+					<input type="password" name="user[password]" id="password">
 					<label for="password">Password</label>
 				</div>
 
 				<div class="input-field">
-					<input type="text" name="user[password_confirmation]" id="cpassword">
+					<input type="password" name="user[password_confirmation]" id="cpassword">
 					<label for="cpassword">Password Confirmation</label>
 				</div>
 				<button class="btn waves-effect waves-light center-align" type="submit">Register</button>

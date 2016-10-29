@@ -47,7 +47,7 @@ gem 'bourbon'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'paperclip', '~> 4.2'
-gem 'rails-footnotes', '>= 4.0.0'
+# gem 'rails-footnotes', '>= 4.0.0'
 gem 'hirb', '~> 0.7.3'
 gem 'autoprefixer-rails', '~> 6.5'
 gem 'bootstrap-sass', '~> 3.3'
