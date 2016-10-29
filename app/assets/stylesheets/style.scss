@@ -49,6 +49,9 @@ $gun-metal: #233237;
 $rusty-red: #984B43;
 $warm-yellow: #EAC67A;
 
+.requiredAst {
+	color: lighten($rusty-red, 20%);
+}
 .marginBottom {
 	margin-bottom: 20px;
 }
@@ -148,10 +151,14 @@ nav {
 .articleLink {
 	color: black;
 	transition: all 1s ease-out;
+	:hover {
+		color: lighten($gun-metal, 20%);
+		transition: all 0.5s ease-out;
+	}
 	a {
 		color: black;
 	   :hover {
-		color: $gun-metal;
+		
 	   }
 	}
 	h5 {
@@ -337,6 +344,10 @@ select.ui-datepicker-month, select.ui-datepicker-year {
     background-color: #ddd !important;
     color: rgba(0,0,0,0.26);
     border-bottom: 1px dotted rgba(0,0,0,0.26);
+}
+
+.select2-container--default .select2-selection--single {
+	background-color: inherit !important;
 }
 
 .inputLabel {

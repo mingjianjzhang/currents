@@ -13,11 +13,6 @@
   </div>
  </div>
 <p><%= notice %></p>
-<% if alert %>
-  <% alert.each do |alert| %>
-	<p class="red-text"><%= alert %> </p>
-  <% end %>
-<% end %>
 <form id="creatingContent" action="/contents" method="post">
 	 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 	 <input type="hidden" name="timeline_id" value="<%= @timeline.id %>">
@@ -30,14 +25,21 @@
 						<option value="<%= category.id %>"><%= category.name %></option>
 					<% end %>
 				</select>
-				<label for="categories">Type of Content</label>
+				<label for="categories">Type of Content<span class="requiredAst">*</span></label>
+				<% if alert %>
+				<p class="red-text"> Type of Content <%= alert[:category_id].first if alert[:category_id] %></p>
+				<% end %>
 	 		</div>
+	 		
 		</div>
 		<div class="col s6">
 			<div class="linkInputs input-field" style="display:none">
 				<input class="inputText" type="text" name="content_nodes[link]" id="link">
 				<label for="link"></label>
 			</div>			
+			<% if alert %>
+			<p class="red-text">Link <%= alert[:link].first if alert[:link] %></label></p>
+			<% end %>
 		</div>
 	 </div>
 
@@ -45,14 +47,22 @@
 	 	<div class="col s6">
 	 		<div class="input-field">
 	  			<input class="inputText" type="text" name="content_nodes[title]" id="contenttitle">
-	  			<label for="contenttitle">Title</label>
+	  			<label for="contenttitle">Title<span class="requiredAst">*</span></label>
 	 		</div> 
+	 		<% if alert %>
+	 		<p class="red-text">Title <%= alert[:title].first if alert %></label></p>
+	 		<% end %>
 	 	</div>
 	 	<div class="col s6">
 		 	<div class="input-field">
 				<input class="date inputText" class="date" type="text" name="content_nodes[day]" id="day" placeholder="YYYY-MM-DD">
-			 	<label class="active" for="day">Date Published</label>
+			 	<label class="active" for="day">Date Published<span class="requiredAst">*</span></label></label>
 		 	</div>
+		 	<% if alert %>
+		 	 	<% alert[:day].each do |message| %>
+		 	    		<p class="red-text">Date Published <%= message %> </p>
+		 	    	<% end %>
+		 	   <% end %>
 		</div> 			
 	 </div>
 
@@ -60,8 +70,11 @@
 		<div class="col s6">
 			<div class="input-field">
 				<textarea class="inputText materialize-textarea" name="content_nodes[description]" id="description"></textarea>
-			 	<label for="description">Description</label>
+			 	<label for="description">Description<span class="requiredAst">*</span></label></label>
 			 </div>
+			 <% if alert %>
+			 <p class="red-text">Description <%= alert[:description].first %></p>
+			 <% end %>
 		</div>
 		<div id="imagesr" class="col s6">
 			<input type="hidden" name="content_nodes[image_id]" id="uploadID" value="8">
@@ -76,14 +89,16 @@
 	 <div class="row">
 	 	<div class="col s6">
 			<div class="input-field">
-				<p class="inputLabel"> Source </p>
+				<p class="inputLabel"> Source <span class="requiredAst">*</span></label></p>
 				<select id = "sourceList" class="propSelect" name="content_nodes[source_id]" id="sourceS">>
 					<option disabled selected>Choose...</option>
 					<% @sources.each do |source| %>
 						<option value="<%= source.id %>"><%= source.name %></option>
 					<% end %>
 				</select>
-
+				<% if alert %>
+				<p class="red-text">Source <%= alert[:source_id].first if alert[:description] %></p>
+				<% end %>
 				<a action="source" class="addMod btn waves-effect waves-light"><i class="material-icons left">add_circle</i>Source</a>
 			</div>
 		 		<p class="inputLabel"> Tags </p>
@@ -142,6 +157,7 @@
 <a class="createContent btn waves-effect waves-light center-align">Add Content</a>
 </div>
 <script>
+	$('.linkInputs').show();
 	//Materialize Selects
 	$('#newFormLoading').hide();
 	$('.contentCategory').material_select();
@@ -177,19 +193,19 @@ $('#contentCreationForm').ajaxStart(function() {
 	})
 
 	$('.contentCategory').change(function(){
-		$('.linkInputs').show();
+		
 		$('#contentCreationForm .inputText').val("");
 
 		if($(this).val() == 1) {
-			$('label[for=link]').text("Link");
+			$('label[for=link]').html("Link<span class='requiredAst'>*</span>");
 			$('.notBook').show();
 		} else if ($(this).val() == 2) {
-			$('label[for=link]').text("Embed code(iframe)");
+			$('label[for=link]').html("Embed code(iframe)<span class='requiredAst'>*</span>");
 			$('.notBook').show();
 			$('#imagePreview').hide();
 			$('#imagesr').hide();
 		} else if ($(this).val() == 4) {
-			$('label[for=link]').text("ISBN");
+			$('label[for=link]').html("ISBN<span class='requiredAst'>*</span>");
 			$('.notBook').hide();
 			$('.addSource').hide();
 			$('.addTag').hide();

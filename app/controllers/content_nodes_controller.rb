@@ -17,7 +17,7 @@ class ContentNodesController < ApplicationController
       ContentTag.add_tags content.id, params[:tags]
   	  render partial: "content_nodes/partials/new", locals: { notice: "You have successfully added a piece of content" }
   	else
-      render partial: "content_nodes/partials/new", locals: { alert: content.errors.full_messages }
+      render partial: "content_nodes/partials/new", locals: { alert: content.errors.messages }
     end
   end 
  

@@ -8,7 +8,8 @@ class ContentNode < ActiveRecord::Base
   has_many :timelines, through: :timeline_contents
   has_many :content_tags, dependent: :destroy
   has_many :tags, through: :content_tags
-  validates :title, :link, :description, :category_id, :source_id, presence: true
+  validates :title, :link, :description, :day, :category_id, :source_id, presence: true
+  validates :day, format: { with: /\b\d{4}-\d{2}-\d{2}\b/, message: "must be in format YYYY-MM-DD" }
   def self.everything timeline_id
   	# content = Timeline.find(timeline_id).content_nodes
     content = self.all_info timeline_id
