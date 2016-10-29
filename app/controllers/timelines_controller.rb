@@ -2,7 +2,7 @@ class TimelinesController < ApplicationController
   before_action :require_login, only: [:dashboard]
   before_action :require_correct_user, only: [:dashboard]
   def index
-    @timelines = Timeline.limit(5)
+    @timelines = Timeline.all
     contents = []
     @timelines.each do |timeline|
       item = {};
