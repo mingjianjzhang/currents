@@ -52,7 +52,6 @@ var zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
 var svg = d3.select("#graphTest").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .call(d3.behavior.zoom().on("zoom", rescale));
 
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node"),
