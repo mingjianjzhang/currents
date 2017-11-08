@@ -3,7 +3,6 @@ $(document).ready(function(){
 	$.post($('#fromBeginning').attr('action'), $('#fromBeginning').serialize(), function(res) {
 		$('#timelineDisplay').html(res);
 	})
-	$('#goBut').attr("href", "timeline/2");
 	$(".button-collapse").sideNav({
 		menuWidth: 180
 	});
@@ -11,12 +10,14 @@ $(document).ready(function(){
 
 	$('#searchSelect').select2({
 	});
+	$('#goBut').attr('href', 'timeline/'+$('#searchSelect').val());
 	$('.propSelect').select2({
 
 	})
 	$('#logic').material_select();
 
 	$('#searchSelect').change(function(){
+		console.log("changing");
 		$('#goBut').attr("href", "timeline/"+$(this).val());
 	})
 
