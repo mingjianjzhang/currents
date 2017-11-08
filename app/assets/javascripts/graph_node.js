@@ -33,7 +33,7 @@ var graph =
  ]
 };  
 var width = $(document).width(),
-    height = 500,
+    height = 700,
     colors = d3.scale.category10(),
     root;
 
